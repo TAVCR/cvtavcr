@@ -19,7 +19,7 @@
 
         /* --- REGLAS CRÍTICAS DE IMPRESIÓN --- */
         @page {
-            margin: 0; /* Elimina encabezados y pies de página del navegador (URL, fecha, etc.) */
+            margin: 0; /* Elimina encabezados y pies de página del navegador */
             size: auto;
         }
 
@@ -30,6 +30,8 @@
                 margin: 0 !important;
                 padding: 0 !important;
                 background-color: white !important;
+                /* Fuente base ligeramente más pequeña para que quepa todo */
+                font-size: 11px !important; 
             }
 
             /* Ocultar elementos de interfaz */
@@ -48,40 +50,67 @@
                 border-radius: 0 !important;
             }
             
-            /* Fila: Se asegura de no romper la página entre columnas si es posible */
+            /* Fila */
             .print-row {
                 display: table-row !important;
             }
 
-            /* Sidebar: Celda de tabla */
+            /* Sidebar: Celda de tabla COMPACTADA */
             .print-sidebar {
                 display: table-cell !important;
-                width: 33% !important;
+                width: 30% !important; /* Ligeramente más estrecha para dar espacio al principal */
                 vertical-align: top !important;
                 height: 100% !important;
-                background-color: #1e293b !important; /* Color Slate-800 forzado */
-                padding: 2rem !important; /* Padding interno para compensar falta de margen de hoja */
+                background-color: #1e293b !important;
+                padding: 1.5rem !important; /* Padding reducido */
             }
 
-            /* Contenido Principal: Celda de tabla */
+            /* Contenido Principal: Celda de tabla COMPACTADA */
             .print-main {
                 display: table-cell !important;
-                width: 67% !important;
+                width: 70% !important;
                 vertical-align: top !important;
                 height: 100% !important;
                 background-color: #ffffff !important;
-                padding: 2.5rem !important; /* Padding interno */
+                padding: 1.5rem 2rem !important; /* Padding reducido */
             }
 
-            /* Evita cortes feos dentro de textos */
-            p, h3, h4, li {
-                page-break-inside: avoid;
-            }
+            /* --- REDUCCIÓN DE TAMAÑOS PARA AJUSTE EN UNA PÁGINA --- */
             
-            /* Asegura que las imágenes no se corten */
-            img {
-                page-break-inside: avoid;
+            /* Títulos */
+            h1 { font-size: 2rem !important; margin-bottom: 0.25rem !important; line-height: 1 !important; }
+            h2 { font-size: 1.1rem !important; margin-bottom: 0.25rem !important; }
+            h3 { 
+                font-size: 1rem !important; 
+                margin-bottom: 0.5rem !important; 
+                padding-bottom: 0.1rem !important; 
+                margin-top: 1rem !important; /* Espacio antes de cada sección */
             }
+            /* Primer h3 no necesita margen arriba */
+            section:first-of-type h3, .print-sidebar > div:first-child h3 { margin-top: 0 !important; }
+
+            /* Subtítulos y textos */
+            h4 { font-size: 0.95rem !important; margin-top: 0.5rem !important; margin-bottom: 0.1rem !important; }
+            p { font-size: 0.85rem !important; margin-bottom: 0.25rem !important; line-height: 1.3 !important; }
+            
+            /* Listas compactas */
+            ul { margin-bottom: 0.5rem !important; }
+            li { margin-bottom: 0.1rem !important; font-size: 0.85rem !important; line-height: 1.3 !important; }
+            
+            /* Foto de perfil más pequeña */
+            .print-sidebar img {
+                width: 100px !important;
+                height: 100px !important;
+                margin-bottom: 1rem !important;
+            }
+
+            /* Forzar anulación de márgenes grandes de Tailwind */
+            .mb-8, .mb-10 { margin-bottom: 0.5rem !important; }
+            header.mb-10 { margin-bottom: 1rem !important; }
+
+            /* Evita cortes feos dentro de textos */
+            p, h3, h4, li { page-break-inside: avoid; }
+            img { page-break-inside: avoid; }
         }
     </style>
 </head>
