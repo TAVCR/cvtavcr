@@ -29,16 +29,33 @@
                 padding: 0 !important;
                 max-width: 100% !important;
                 border-radius: 0 !important;
-                display: flex !important; 
+                /* Eliminamos display:flex de aquí para manejarlo en el wrapper interno */
+                width: 100% !important;
             }
+            
+            /* CLASE CRÍTICA: Fuerza la dirección horizontal en impresión */
+            .print-row {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                height: 100%; /* Intenta mantener la altura */
+            }
+
             .print-sidebar {
                 /* Asegurarse de que el fondo oscuro se imprima (slate-800) */
                 background-color: #1e293b !important;
                 width: 33% !important; /* Asignar ancho explícito para impresión */
+                height: auto; /* Dejar que crezca con el contenido */
             }
             .print-main {
                 background-color: #ffffff !important;
                 width: 67% !important; /* Asignar ancho explícito para impresión */
+                height: auto;
+            }
+
+            /* Evitar cortes feos dentro de los elementos */
+            li, p, h3, h4 {
+                break-inside: avoid;
             }
         }
     </style>
@@ -68,8 +85,8 @@
     <!-- Contenedor principal del CV -->
     <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg overflow-hidden print-container">
         
-        <!-- Contenedor Flex para columnas de igual altura -->
-        <div class="flex flex-col md:flex-row">
+        <!-- Contenedor Flex para columnas de igual altura. AÑADIDO: print-row -->
+        <div class="flex flex-col md:flex-row print-row min-h-screen">
 
             <!-- INICIO DE LA COLUMNA LATERAL (Sidebar) -->
             <div class="w-full md:w-1/3 bg-slate-800 text-slate-100 p-8 print-sidebar">
