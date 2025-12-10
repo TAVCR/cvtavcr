@@ -17,45 +17,70 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* Estilos de impresión para asegurar que se vea bien al "Imprimir a PDF" */
+        /* --- REGLAS CRÍTICAS DE IMPRESIÓN --- */
+        @page {
+            margin: 0; /* Elimina encabezados y pies de página del navegador (URL, fecha, etc.) */
+            size: auto;
+        }
+
         @media print {
             body {
-                -webkit-print-color-adjust: exact; /* Forzar la impresión de fondos y colores en Chrome */
-                print-color-adjust: exact; /* Estándar */
-            }
-            .print-container {
-                box-shadow: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
                 margin: 0 !important;
                 padding: 0 !important;
-                max-width: 100% !important;
-                border-radius: 0 !important;
-                /* Eliminamos display:flex de aquí para manejarlo en el wrapper interno */
+                background-color: white !important;
+            }
+
+            /* Ocultar elementos de interfaz */
+            .no-print, button, .fixed {
+                display: none !important;
+            }
+
+            /* Contenedor Principal: Se comporta como tabla para garantizar altura igual */
+            .print-container {
+                display: table !important;
+                table-layout: fixed !important;
                 width: 100% !important;
+                height: 100% !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
             }
             
-            /* CLASE CRÍTICA: Fuerza la dirección horizontal en impresión */
+            /* Fila: Se asegura de no romper la página entre columnas si es posible */
             .print-row {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: nowrap !important;
-                height: 100%; /* Intenta mantener la altura */
+                display: table-row !important;
             }
 
+            /* Sidebar: Celda de tabla */
             .print-sidebar {
-                /* Asegurarse de que el fondo oscuro se imprima (slate-800) */
-                background-color: #1e293b !important;
-                width: 33% !important; /* Asignar ancho explícito para impresión */
-                height: auto; /* Dejar que crezca con el contenido */
-            }
-            .print-main {
-                background-color: #ffffff !important;
-                width: 67% !important; /* Asignar ancho explícito para impresión */
-                height: auto;
+                display: table-cell !important;
+                width: 33% !important;
+                vertical-align: top !important;
+                height: 100% !important;
+                background-color: #1e293b !important; /* Color Slate-800 forzado */
+                padding: 2rem !important; /* Padding interno para compensar falta de margen de hoja */
             }
 
-            /* Evitar cortes feos dentro de los elementos */
-            li, p, h3, h4 {
-                break-inside: avoid;
+            /* Contenido Principal: Celda de tabla */
+            .print-main {
+                display: table-cell !important;
+                width: 67% !important;
+                vertical-align: top !important;
+                height: 100% !important;
+                background-color: #ffffff !important;
+                padding: 2.5rem !important; /* Padding interno */
+            }
+
+            /* Evita cortes feos dentro de textos */
+            p, h3, h4, li {
+                page-break-inside: avoid;
+            }
+            
+            /* Asegura que las imágenes no se corten */
+            img {
+                page-break-inside: avoid;
             }
         }
     </style>
