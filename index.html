@@ -39,8 +39,7 @@
             }
 
             .print-container {
-                display: table !important;
-                table-layout: fixed !important;
+                display: block !important; /* Cambiado a block para permitir flujo normal */
                 width: 100% !important;
                 height: 100% !important;
                 box-shadow: none !important;
@@ -48,6 +47,13 @@
                 border-radius: 0 !important;
             }
             
+            /* Layout Principal: Tabla para las dos columnas superiores */
+            .top-section-table {
+                display: table !important;
+                table-layout: fixed !important;
+                width: 100% !important;
+            }
+
             .print-row {
                 display: table-row !important;
             }
@@ -56,7 +62,7 @@
                 display: table-cell !important;
                 width: 30% !important;
                 vertical-align: top !important;
-                height: 100% !important;
+                /* Eliminamos height: 100% forzado para que no empuje hacia abajo innecesariamente */
                 background-color: #1e293b !important;
                 padding: 1.5rem 1rem !important; 
             }
@@ -65,12 +71,26 @@
                 display: table-cell !important;
                 width: 70% !important;
                 vertical-align: top !important;
-                height: 100% !important;
                 background-color: #ffffff !important;
-                padding: 1.5rem 2rem !important; 
+                padding: 1.5rem 2rem 0 2rem !important; /* Padding inferior 0 para pegar con la sección de abajo */
             }
 
-            /* --- AJUSTES DE ESPACIADO --- */
+            /* Nueva Sección Inferior Horizontal */
+            .bottom-horizontal-section {
+                display: block !important;
+                width: 100% !important;
+                background-color: #ffffff !important; /* Fondo blanco para continuidad */
+                padding: 1rem 2rem 1.5rem 2rem !important;
+                border-top: 2px solid #e2e8f0 !important; /* Separador sutil */
+            }
+
+            .grid-footer {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important; /* 3 Columnas */
+                gap: 1rem !important;
+            }
+
+            /* Ajustes de Texto */
             h1 { font-size: 1.8rem !important; margin-bottom: 0.2rem !important; line-height: 1 !important; }
             h2 { font-size: 1rem !important; margin-bottom: 0.5rem !important; }
             
@@ -80,21 +100,23 @@
                 padding-bottom: 0.1rem !important; 
                 margin-top: 0.8rem !important; 
                 border-bottom-width: 1px !important; 
+                color: #0369a1 !important; /* Sky-700 para títulos en fondo blanco */
             }
-            section:first-of-type h3, .print-sidebar > div:first-child h3 { margin-top: 0 !important; }
+            /* Excepción para títulos en sidebar oscuro */
+            .print-sidebar h3 { color: #0ea5e9 !important; /* Sky-500 */ }
 
             h4 { 
                 font-size: 0.85rem !important; 
                 margin-top: 0.5rem !important; 
                 margin-bottom: 0.1rem !important; 
-                color: #f1f5f9 !important; 
+                color: #334155 !important; /* Slate-700 oscuro en fondo blanco */
             }
-            /* En main column h4 es oscuro */
-            .print-main h4 { color: #1e293b !important; margin-top: 0.5rem !important;}
-
+            
             p { font-size: 0.8rem !important; margin-bottom: 0.2rem !important; }
             ul { margin-top: 0 !important; margin-bottom: 0.2rem !important; }
-            li { margin-bottom: 0.1rem !important; font-size: 0.8rem !important; }
+            li { margin-bottom: 0.1rem !important; font-size: 0.8rem !important; color: #475569 !important; }
+            /* Texto claro en sidebar */
+            .print-sidebar li, .print-sidebar p { color: #cbd5e1 !important; }
 
             .print-sidebar img {
                 width: 90px !important;
@@ -129,147 +151,166 @@
 
     <!-- CV Container -->
     <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg overflow-hidden print-container">
-        <div class="flex flex-col md:flex-row print-row min-h-screen">
+        
+        <!-- PARTE SUPERIOR: 2 COLUMNAS (AZUL y BLANCA) -->
+        <div class="top-section-table">
+            <div class="print-row flex flex-col md:flex-row">
 
-            <!-- SIDEBAR -->
-            <div class="w-full md:w-1/3 bg-slate-800 text-slate-100 p-8 print-sidebar">
-                <div class="text-center mb-8">
-                    <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-sky-500 object-cover shadow-lg">
+                <!-- SIDEBAR (Ahora más corto) -->
+                <div class="w-full md:w-1/3 bg-slate-800 text-slate-100 p-8 print-sidebar">
+                    <div class="text-center mb-8">
+                        <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-sky-500 object-cover shadow-lg">
+                    </div>
+
+                    <!-- Contacto -->
+                    <div class="mb-8">
+                        <h3 id="sidebar-contact-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CONTACT</h3>
+                        <ul class="text-sm text-slate-200 space-y-3 font-medium">
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                <span>+506 85020909</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                <span class="break-all">dimension.interactiva@gmail.com</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.102 1.101m.758 4.899l-5.656 5.656" /></svg>
+                                <span class="break-all">tavcr.github.io/oferta-digital/</span>
+                            </li>
+                            <li class="flex items-center space-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657l-4.243-4.243a1 1 0 00-1.414 0l-4.243 4.243a1 1 0 001.414 1.414L12 13.414l2.243 2.243a1 1 0 001.414 0l2.243-2.243a1 1 0 000 1.414zM12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
+                                <span>San José, Costa Rica</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="mb-0">
+                        <h3 id="sidebar-skills-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CORE SKILLS</h3>
+                        <ul id="sidebar-skills-list" class="text-sm text-slate-200 list-inside space-y-2 font-medium">
+                            <li>End-to-End Video Production</li>
+                            <li>Professional Audio Design</li>
+                            <li>Post-Production (Resolve/Audition)</li>
+                            <li>Professional Photography (RAW)</li>
+                            <li>On Screen Graphics</li>
+                            <li>Color Grading</li>
+                            <li>Process & Workflow Management</li>
+                        </ul>
+                    </div>
+                    <!-- NOTA: Technical Stack y Academic se han movido abajo -->
                 </div>
 
-                <!-- Contacto -->
-                <div class="mb-8">
-                    <h3 id="sidebar-contact-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CONTACT</h3>
-                    <ul class="text-sm text-slate-200 space-y-3 font-medium">
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                            <span>+506 85020909</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                            <span class="break-all">dimension.interactiva@gmail.com</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.102 1.101m.758 4.899l-5.656 5.656" /></svg>
-                            <span class="break-all">tavcr.github.io/oferta-digital/</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657l-4.243-4.243a1 1 0 00-1.414 0l-4.243 4.243a1 1 0 001.414 1.414L12 13.414l2.243 2.243a1 1 0 001.414 0l2.243-2.243a1 1 0 000 1.414zM12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
-                            <span>San José, Costa Rica</span>
-                        </li>
-                    </ul>
-                </div>
+                <!-- MAIN CONTENT (Parte Superior) -->
+                <div class="w-full md:w-2/3 p-10 print-main">
 
-                <!-- Skills -->
-                <div class="mb-8">
-                    <h3 id="sidebar-skills-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CORE SKILLS</h3>
-                    <ul id="sidebar-skills-list" class="text-sm text-slate-200 list-inside space-y-2 font-medium">
-                        <li>End-to-End Video Production</li>
-                        <li>Professional Audio Design</li>
-                        <li>Post-Production (Resolve/Audition)</li>
-                        <li>Professional Photography (RAW)</li>
-                        <li>On Screen Graphics</li> <!-- CAMBIO AQUÍ -->
-                        <li>Color Grading</li>
-                        <!-- BORRADO Studio Lighting -->
-                        <li>Process & Workflow Management</li>
-                    </ul>
-                </div>
+                    <header class="mb-10">
+                        <h1 class="font-bold text-5xl text-slate-800 mb-2">GUSTAVO GONZÁLEZ</h1>
+                        <h2 class="font-semibold text-2xl text-sky-700">
+                            <span id="main-role">SENIOR MULTIMEDIA PRODUCER</span>
+                            <span id="main-subrole" class="block text-xl font-medium text-slate-600">(Video • Photography • Graphic Design • Post-Production • Audio)</span>
+                        </h2>
+                    </header>
 
-                <!-- Tech Stack - COMPACTADO -->
-                <div class="mb-8">
-                    <h3 id="sidebar-stack-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">TECHNICAL STACK</h3>
-                    
-                    <h4 id="sidebar-stack-primary" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Primary Software</h4>
-                    <ul id="list-primary" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                    <section class="mb-10">
+                        <h3 id="main-profile-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-4">PROFESSIONAL PROFILE</h3>
+                        <p id="main-profile-text" class="text-slate-700 leading-relaxed text-base font-medium">
+                            Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.
+                        </p>
+                    </section>
+
+                    <section class="mb-4">
+                        <h3 id="main-exp-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-6">PROFESSIONAL EXPERIENCE</h3>
+                        
+                        <!-- Job 1 -->
+                        <div class="mb-8">
+                            <h4 id="job1-title" class="font-semibold text-xl text-slate-800">DIGITAL CONTENT PRODUCER</h4>
+                            <p id="job1-meta" class="text-md font-semibold text-slate-600 italic">Freelance / Independent Consultant | 2018 – Present</p>
+                            <p id="job1-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
+                                Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).
+                            </p>
+                            <ul id="job1-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
+                                <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
+                                <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
+                                <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
+                                <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Job 2 -->
+                        <div class="mb-0"> 
+                            <h4 id="job2-title" class="font-semibold text-xl text-slate-800">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
+                            <p id="job2-meta" class="text-md font-semibold text-slate-600 italic">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
+                            <p id="job2-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
+                                17+ years as lead audio designer/voice talent for top brands. Current station voice for AMOR FM.
+                            </p>
+                            <ul id="job2-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
+                                <li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
+                                <li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
+                                <li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVA PARTE INFERIOR: HORIZONTAL (Sección blanca que ocupa todo el ancho) -->
+        <div class="bottom-horizontal-section p-8 bg-white border-t-2 border-slate-200">
+            <!-- Grid de 3 columnas para organizar el contenido técnico y académico -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 grid-footer">
+                
+                <!-- Columna 1: Software -->
+                <div>
+                    <h3 id="footer-stack-title" class="font-bold text-lg text-sky-700 border-b border-sky-200 pb-2 mb-3 uppercase tracking-wider">TECHNICAL STACK</h3>
+                    <h4 id="footer-stack-primary" class="font-semibold text-slate-700 text-sm mt-2 mb-1 uppercase">Primary Software</h4>
+                    <ul id="footer-list-primary" class="text-sm text-slate-600 list-disc list-inside font-medium mb-3">
                         <li>DaVinci Resolve Studio</li>
                         <li>Adobe Audition</li>
                         <li>Lightroom</li>
                     </ul>
-
-                    <h4 id="sidebar-stack-secondary" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Secondary Software</h4>
-                    <ul id="list-secondary" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                    <h4 id="footer-stack-secondary" class="font-semibold text-slate-700 text-sm mt-2 mb-1 uppercase">Secondary Software</h4>
+                    <ul id="footer-list-secondary" class="text-sm text-slate-600 list-disc list-inside font-medium">
                         <li>Canva Pro, Photoshop</li>
                         <li>ComfyUI / ElevenLabs</li>
                     </ul>
+                </div>
 
-                    <h4 id="sidebar-stack-cameras" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Cameras & Lenses</h4>
-                    <ul id="list-cameras" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                <!-- Columna 2: Hardware (Cameras & Audio) -->
+                <div>
+                    <h3 class="font-bold text-lg text-sky-700 border-b border-sky-200 pb-2 mb-3 uppercase tracking-wider opacity-0 md:opacity-100">HARDWARE</h3> <!-- Título invisible para alinear o visible si quieres -->
+                    
+                    <h4 id="footer-stack-cameras" class="font-semibold text-slate-700 text-sm mt-2 mb-1 uppercase">Cameras & Lenses</h4>
+                    <ul id="footer-list-cameras" class="text-sm text-slate-600 list-disc list-inside font-medium mb-3">
                         <li>Canon R5 II | RF 24-105 L | RF 35mm</li>
                     </ul>
 
-                    <h4 id="sidebar-stack-audio" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Audio Gear</h4>
-                    <ul id="list-audio" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                    <h4 id="footer-stack-audio" class="font-semibold text-slate-700 text-sm mt-2 mb-1 uppercase">Audio Gear</h4>
+                    <ul id="footer-list-audio" class="text-sm text-slate-600 list-disc list-inside font-medium">
                         <li>Neumann U87/M149 | Apollo Twin X</li>
                     </ul>
-                    
-                    <h4 id="sidebar-stack-lighting" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Lighting & Grip</h4>
-                    <ul id="list-lighting" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                </div>
+
+                <!-- Columna 3: Lighting & Academic -->
+                <div>
+                    <h3 id="footer-academic-title-head" class="font-bold text-lg text-sky-700 border-b border-sky-200 pb-2 mb-3 uppercase tracking-wider opacity-0 md:opacity-100">INFO</h3>
+
+                    <h4 id="footer-stack-lighting" class="font-semibold text-slate-700 text-sm mt-2 mb-1 uppercase">Lighting & Grip</h4>
+                    <ul id="footer-list-lighting" class="text-sm text-slate-600 list-disc list-inside font-medium mb-4">
                         <li>Godox V1/AD300 | LEDs | DJI Gimbal</li>
                     </ul>
 
-                    <!-- SECCIÓN WORKSTATION BORRADA COMPLETAMENTE AQUÍ -->
+                    <!-- Sección Académica Movida Aquí -->
+                    <div class="mt-4 pt-4 border-t border-slate-100">
+                        <h3 id="footer-academic-title" class="font-bold text-md text-sky-700 uppercase tracking-wider mb-1">ACADEMIC</h3>
+                        <p id="footer-academic-degree" class="font-semibold text-sm text-slate-800">Master's in Industrial Engineering</p>
+                        <p id="footer-academic-uni" class="text-sm text-slate-500 italic font-medium">Interamericana University of Costa Rica</p>
+                    </div>
                 </div>
 
-                <!-- Academic -->
-                <div>
-                    <h3 id="sidebar-academic-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">ACADEMIC</h3>
-                    <p id="sidebar-academic-degree" class="font-semibold text-sm text-slate-100">Master's in Industrial Engineering</p>
-                    <p id="sidebar-academic-uni" class="text-sm text-slate-300 italic font-medium">Interamericana University of Costa Rica</p>
-                </div>
-            </div>
-
-            <!-- MAIN CONTENT -->
-            <div class="w-full md:w-2/3 p-10 print-main">
-
-                <header class="mb-10">
-                    <h1 class="font-bold text-5xl text-slate-800 mb-2">GUSTAVO GONZÁLEZ</h1>
-                    <h2 class="font-semibold text-2xl text-sky-700">
-                        <span id="main-role">SENIOR MULTIMEDIA PRODUCER</span>
-                        <span id="main-subrole" class="block text-xl font-medium text-slate-600">(Video • Photography • Graphic Design • Post-Production • Audio)</span>
-                    </h2>
-                </header>
-
-                <section class="mb-10">
-                    <h3 id="main-profile-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-4">PROFESSIONAL PROFILE</h3>
-                    <p id="main-profile-text" class="text-slate-700 leading-relaxed text-base font-medium">
-                        Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.
-                    </p>
-                </section>
-
-                <section class="mb-10">
-                    <h3 id="main-exp-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-6">PROFESSIONAL EXPERIENCE</h3>
-                    
-                    <!-- Job 1 -->
-                    <div class="mb-8">
-                        <h4 id="job1-title" class="font-semibold text-xl text-slate-800">DIGITAL CONTENT PRODUCER</h4>
-                        <p id="job1-meta" class="text-md font-semibold text-slate-600 italic">Freelance / Independent Consultant | 2018 – Present</p>
-                        <p id="job1-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
-                            Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).
-                        </p>
-                        <ul id="job1-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
-                            <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
-                            <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
-                            <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
-                            <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Job 2 -->
-                    <div class="mb-8"> 
-                        <h4 id="job2-title" class="font-semibold text-xl text-slate-800">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
-                        <p id="job2-meta" class="text-md font-semibold text-slate-600 italic">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
-                        <p id="job2-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
-                            17+ years as lead audio designer/voice talent for top brands. Current station voice for AMOR FM.
-                        </p>
-                        <ul id="job2-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
-                            <li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
-                            <li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
-                            <li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>
-                        </ul>
-                    </div>
-                </section>
             </div>
         </div>
+
     </div>
 
     <!-- Script de Traducción -->
@@ -288,20 +329,21 @@
                     <li>Color Grading</li>
                     <li>Process & Workflow Management</li>
                 `,
-                sidebarStack: "TECHNICAL STACK",
-                sidebarStackPrimary: "Primary Software",
-                sidebarStackSecondary: "Secondary Software",
-                listSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
-                sidebarStackCameras: "Cameras & Lenses",
-                listCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
-                sidebarStackAudio: "Audio Gear",
-                listAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
-                sidebarStackLighting: "Lighting & Grip",
-                listLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
-                // WORKSTATION BORRADO
-                sidebarAcademic: "ACADEMIC",
-                sidebarAcademicDegree: "Master's in Industrial Engineering",
-                sidebarAcademicUni: "Interamericana University of Costa Rica",
+                // Footer Translations
+                footerStack: "TECHNICAL STACK",
+                footerStackPrimary: "Primary Software",
+                footerStackSecondary: "Secondary Software",
+                footerListSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
+                footerStackCameras: "Cameras & Lenses",
+                footerListCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
+                footerStackAudio: "Audio Gear",
+                footerListAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
+                footerStackLighting: "Lighting & Grip",
+                footerListLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
+                
+                footerAcademic: "ACADEMIC",
+                footerAcademicDegree: "Master's in Industrial Engineering",
+                footerAcademicUni: "Interamericana University of Costa Rica",
                 
                 mainRole: "SENIOR MULTIMEDIA PRODUCER",
                 mainSubrole: "(Video • Photography • Graphic Design • Post-Production • Audio)",
@@ -341,20 +383,21 @@
                     <li>Etalonaje (Color Grading)</li>
                     <li>Gestión de Procesos y Flujos</li>
                 `,
-                sidebarStack: "STACK TÉCNICO",
-                sidebarStackPrimary: "Software Principal",
-                sidebarStackSecondary: "Software Secundario",
-                listSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
-                sidebarStackCameras: "Cámaras y Lentes",
-                listCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
-                sidebarStackAudio: "Equipo de Audio",
-                listAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
-                sidebarStackLighting: "Iluminación y Soportes",
-                listLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
-                // WORKSTATION BORRADO
-                sidebarAcademic: "FORMACIÓN ACADÉMICA",
-                sidebarAcademicDegree: "Maestría en Ingeniería Industrial",
-                sidebarAcademicUni: "Universidad Interamericana de Costa Rica",
+                // Footer Translations ES
+                footerStack: "STACK TÉCNICO",
+                footerStackPrimary: "Software Principal",
+                footerStackSecondary: "Software Secundario",
+                footerListSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
+                footerStackCameras: "Cámaras y Lentes",
+                footerListCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
+                footerStackAudio: "Equipo de Audio",
+                footerListAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
+                footerStackLighting: "Iluminación y Soportes",
+                footerListLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
+                
+                footerAcademic: "FORMACIÓN ACADÉMICA",
+                footerAcademicDegree: "Maestría en Ingeniería Industrial",
+                footerAcademicUni: "Universidad Interamericana de Costa Rica",
                 
                 mainRole: "PRODUCTOR MULTIMEDIA SENIOR",
                 mainSubrole: "(Video • Fotografía • Diseño Gráfico • Postproducción • Audio)",
@@ -396,22 +439,26 @@
             document.getElementById('sidebar-contact-title').innerText = t.sidebarContact;
             document.getElementById('sidebar-skills-title').innerText = t.sidebarSkills;
             document.getElementById('sidebar-skills-list').innerHTML = t.sidebarSkillsList;
-            document.getElementById('sidebar-stack-title').innerText = t.sidebarStack;
-            document.getElementById('sidebar-stack-primary').innerText = t.sidebarStackPrimary;
-            document.getElementById('sidebar-stack-secondary').innerText = t.sidebarStackSecondary;
-            document.getElementById('list-secondary').innerHTML = t.listSecondary;
-            document.getElementById('sidebar-stack-cameras').innerText = t.sidebarStackCameras;
-            document.getElementById('list-cameras').innerHTML = t.listCameras;
-            document.getElementById('sidebar-stack-audio').innerText = t.sidebarStackAudio;
-            document.getElementById('list-audio').innerHTML = t.listAudio;
-            document.getElementById('sidebar-stack-lighting').innerText = t.sidebarStackLighting;
-            document.getElementById('list-lighting').innerHTML = t.listLighting;
             
-            // Workstation updates removed
+            // Footer Section Updates
+            document.getElementById('footer-stack-title').innerText = t.footerStack;
+            document.getElementById('footer-stack-primary').innerText = t.footerStackPrimary;
+            document.getElementById('footer-stack-secondary').innerText = t.footerStackSecondary;
+            document.getElementById('footer-list-secondary').innerHTML = t.footerListSecondary;
             
-            document.getElementById('sidebar-academic-title').innerText = t.sidebarAcademic;
-            document.getElementById('sidebar-academic-degree').innerText = t.sidebarAcademicDegree;
-            document.getElementById('sidebar-academic-uni').innerText = t.sidebarAcademicUni;
+            document.getElementById('footer-stack-cameras').innerText = t.footerStackCameras;
+            document.getElementById('footer-list-cameras').innerHTML = t.footerListCameras;
+            
+            document.getElementById('footer-stack-audio').innerText = t.footerStackAudio;
+            document.getElementById('footer-list-audio').innerHTML = t.footerListAudio;
+            
+            document.getElementById('footer-stack-lighting').innerText = t.footerStackLighting;
+            document.getElementById('footer-list-lighting').innerHTML = t.footerListLighting;
+            
+            document.getElementById('footer-academic-title').innerText = t.footerAcademic;
+            document.getElementById('footer-academic-degree').innerText = t.footerAcademicDegree;
+            document.getElementById('footer-academic-uni').innerText = t.footerAcademicUni;
+
 
             // Main
             document.getElementById('main-role').innerText = t.mainRole;
