@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en" id="html-tag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,13 +45,25 @@
 </head>
 <body class="bg-gray-100 p-8 print:p-0 print:bg-white relative">
 
-    <!-- Botón flotante para descargar PDF -->
-    <button onclick="window.print()" class="fixed bottom-8 right-8 bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 print:hidden z-50 flex items-center gap-2 cursor-pointer border-2 border-white/20 backdrop-blur-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-        </svg>
-        Descargar PDF
-    </button>
+    <!-- Contenedor de Botones Flotantes (Solo visibles en pantalla) -->
+    <div class="fixed bottom-8 right-8 flex flex-col gap-3 print:hidden z-50">
+        
+        <!-- Botón Toggle Idioma -->
+        <button onclick="toggleLanguage()" id="lang-btn" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer border-2 border-white/20 backdrop-blur-sm w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+            </svg>
+            <span id="lang-btn-text">Ver en Español</span>
+        </button>
+
+        <!-- Botón Descargar PDF -->
+        <button onclick="window.print()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer border-2 border-white/20 backdrop-blur-sm w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            <span>PDF</span>
+        </button>
+    </div>
 
     <!-- Contenedor principal del CV -->
     <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg overflow-hidden print-container">
@@ -64,31 +76,26 @@
                 
                 <!-- Foto de Perfil -->
                 <div class="text-center mb-8">
-                    <!-- Nota: Asegúrate de que este enlace a la imagen sea público y permanente -->
                     <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-sky-500 object-cover shadow-lg">
                 </div>
 
                 <!-- Contacto -->
                 <div class="mb-8">
-                    <h3 class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CONTACT</h3>
+                    <h3 id="sidebar-contact-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CONTACT</h3>
                     <ul class="text-sm text-slate-200 space-y-3 font-medium">
                         <li class="flex items-center space-x-2">
-                            <!-- Icono Teléfono -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                             <span>+506 85020909</span>
                         </li>
                         <li class="flex items-center space-x-2">
-                            <!-- Icono Email -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                             <span class="break-all">dimension.interactiva@gmail.com</span>
                         </li>
                         <li class="flex items-center space-x-2">
-                            <!-- Icono Web -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.102 1.101m.758 4.899l-5.656 5.656" /></svg>
                             <span class="break-all">tavcr.github.io/oferta-digital/</span>
                         </li>
                         <li class="flex items-center space-x-2">
-                            <!-- Icono Ubicación -->
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657l-4.243-4.243a1 1 0 00-1.414 0l-4.243 4.243a1 1 0 001.414 1.414L12 13.414l2.243 2.243a1 1 0 001.414 0l2.243-2.243a1 1 0 000 1.414zM12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
                             <span>San José, Costa Rica</span>
                         </li>
@@ -97,8 +104,9 @@
 
                 <!-- Habilidades Clave -->
                 <div class="mb-8">
-                    <h3 class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CORE SKILLS</h3>
-                    <ul class="text-sm text-slate-200 list-inside space-y-2 font-medium">
+                    <h3 id="sidebar-skills-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CORE SKILLS</h3>
+                    <ul id="sidebar-skills-list" class="text-sm text-slate-200 list-inside space-y-2 font-medium">
+                        <!-- Se llena con JS -->
                         <li>End-to-End Video Production</li>
                         <li>Professional Audio Design</li>
                         <li>Post-Production (Resolve/Audition)</li>
@@ -112,43 +120,43 @@
 
                 <!-- Technical Stack -->
                 <div class="mb-8">
-                    <h3 class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">TECHNICAL STACK</h3>
+                    <h3 id="sidebar-stack-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">TECHNICAL STACK</h3>
                     
-                    <h4 class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Primary Software</h4>
+                    <h4 id="sidebar-stack-primary" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Primary Software</h4>
                     <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
                         <li>DaVinci Resolve Studio</li>
                         <li>Adobe Audition</li>
                         <li>Lightroom</li>
                     </ul>
 
-                    <h4 class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Secondary Software</h4>
+                    <h4 id="sidebar-stack-secondary" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Secondary Software</h4>
                     <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
                         <li>Canva Pro</li>
                         <li>Adobe Photoshop</li>
                         <li>ComfyUI / ElevenLabs</li>
                     </ul>
 
-                    <h4 class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Cameras & Lenses</h4>
+                    <h4 id="sidebar-stack-cameras" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Cameras & Lenses</h4>
                     <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
                         <li>Canon R5 II Camera</li>
                         <li>Canon RF 24-105mm f/2.8 L</li>
                         <li>Canon RF 35mm f/1.8 STM</li>
                     </ul>
 
-                    <h4 class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Audio Gear</h4>
+                    <h4 id="sidebar-stack-audio" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Audio Gear</h4>
                     <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
                         <li>Neumann Microphones (U87/M149)</li>
                         <li>Universal Audio Apollo Twin X</li>
                     </ul>
                     
-                    <h4 class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Lighting & Grip</h4>
+                    <h4 id="sidebar-stack-lighting" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Lighting & Grip</h4>
                     <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
                         <li>Godox V1 Pro & AD300 Pro</li>
                         <li>Pro Master LED Video Lights</li>
                         <li>DJI Osmo Mobile 6 Gimbal</li>
                     </ul>
 
-                    <h4 class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Workstation & Mobile</h4>
+                    <h4 id="sidebar-stack-workstation" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Workstation & Mobile</h4>
                     <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
                         <li>PC: 13900KF, RTX 4090, 64GB RAM</li>
                         <li>Samsung S25 Ultra</li>
@@ -157,9 +165,9 @@
 
                 <!-- Formación Académica -->
                 <div>
-                    <h3 class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">ACADEMIC</h3>
-                    <p class="font-semibold text-sm text-slate-100">Master's Degree in Industrial Engineering</p>
-                    <p class="text-sm text-slate-300 italic font-medium">Interamericana University of Costa Rica</p>
+                    <h3 id="sidebar-academic-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">ACADEMIC</h3>
+                    <p id="sidebar-academic-degree" class="font-semibold text-sm text-slate-100">Master's Degree in Industrial Engineering</p>
+                    <p id="sidebar-academic-uni" class="text-sm text-slate-300 italic font-medium">Interamericana University of Costa Rica</p>
                 </div>
 
             </div>
@@ -172,46 +180,46 @@
                 <header class="mb-10">
                     <h1 class="font-bold text-5xl text-slate-800 mb-2">GUSTAVO GONZÁLEZ</h1>
                     <h2 class="font-semibold text-2xl text-sky-700">
-                        SENIOR MULTIMEDIA PRODUCER
-                        <span class="block text-xl font-medium text-slate-600">(Video • Photography • Graphic Design • Post-Production • Audio)</span>
+                        <span id="main-role">SENIOR MULTIMEDIA PRODUCER</span>
+                        <span id="main-subrole" class="block text-xl font-medium text-slate-600">(Video • Photography • Graphic Design • Post-Production • Audio)</span>
                     </h2>
                 </header>
 
                 <!-- Sección de Perfil Profesional -->
                 <section class="mb-10">
-                    <h3 class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-4">PROFESSIONAL PROFILE</h3>
-                    <p class="text-slate-700 leading-relaxed text-base font-medium">
+                    <h3 id="main-profile-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-4">PROFESSIONAL PROFILE</h3>
+                    <p id="main-profile-text" class="text-slate-700 leading-relaxed text-base font-medium">
                         Senior Multimedia Producer specialized in full-cycle content creation. I seamlessly integrate professional video production, photography, and graphic design (including on-screen graphics) with high-quality audio engineering. Leveraging 25+ years of media experience and the technical precision of an Industrial Engineer, I deliver comprehensive, high-impact digital assets from concept to final export.
                     </p>
                 </section>
 
                 <!-- Sección de Experiencia Profesional -->
                 <section class="mb-10">
-                    <h3 class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-6">PROFESSIONAL EXPERIENCE</h3>
+                    <h3 id="main-exp-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-6">PROFESSIONAL EXPERIENCE</h3>
                     
                     <!-- Primer Puesto -->
                     <div class="mb-8">
-                        <h4 class="font-semibold text-xl text-slate-800">DIGITAL CONTENT PRODUCER</h4>
-                        <p class="text-md font-semibold text-slate-600 italic">Freelance / Independent Consultant | 2018 – Present</p>
-                        <p class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
+                        <h4 id="job1-title" class="font-semibold text-xl text-slate-800">DIGITAL CONTENT PRODUCER</h4>
+                        <p id="job1-meta" class="text-md font-semibold text-slate-600 italic">Freelance / Independent Consultant | 2018 – Present</p>
+                        <p id="job1-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
                             Strategic production and post-production of visual content for a diverse portfolio of clients. Specialized in creating high-impact assets for social media (Reels/TikTok) and digital campaigns.
                         </p>
-                        <ul class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
+                        <ul id="job1-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
                             <li>Implement professional video (C-Log 2) and photography (RAW) workflows to elevate brand visual quality across various industries.</li>
                             <li><strong>Audio & Graphics Mastery:</strong> Leverage expert-level proficiency in <strong>Adobe Audition</strong> and <strong>Canva</strong> to deliver broadcast-quality sound and high-impact graphic assets efficiently.</li>
                             <li>Design and animate promotional graphics, utilizing <strong>DaVinci Resolve (Fusion)</strong> for high-end on screen graphics and templates.</li>
-                            <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve, etc.)</strong> for high-fidelity image generation and application of <strong>AI-assisted coding</strong> to streamline technical workflows and professional presentations.</li>
+                            <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve, etc.)</strong> for high-fidelity image generation and application of <strong>AI-assisted coding</strong> for basic App development, streamlining technical workflows and professional presentations.</li>
                         </ul>
                     </div>
 
                     <!-- Segundo Puesto -->
                     <div class="mb-8"> 
-                        <h4 class="font-semibold text-xl text-slate-800">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
-                        <p class="text-md font-semibold text-slate-600 italic">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
-                        <p class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
+                        <h4 id="job2-title" class="font-semibold text-xl text-slate-800">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
+                        <p id="job2-meta" class="text-md font-semibold text-slate-600 italic">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
+                        <p id="job2-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
                             Over 17 years as a lead audio designer and the commercial voice for top-tier brands and advertising agencies. Currently the station voice for AMOR FM.
                         </p>
-                        <ul class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
+                        <ul id="job2-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
                             <li>Served as the key brand voice for clients including: Cerveza Imperial, Pizza Hut, Banco Promerica, Subway, Pepsi, Colgate, Suavitel, Fabuloso, Spoon, Palí, etc.</li>
                             <li>This experience is the foundation of my 'broadcast' quality standard and my deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
                             <li>Managed all stages of audio production, from scriptwriting and talent casting to final mix and delivery.</li>
@@ -225,5 +233,155 @@
         </div>
     </div>
 
+    <!-- Script de Traducción -->
+    <script>
+        const translations = {
+            en: {
+                langBtnText: "Ver en Español",
+                sidebarContact: "CONTACT",
+                sidebarSkills: "CORE SKILLS",
+                sidebarSkillsList: `
+                    <li>End-to-End Video Production</li>
+                    <li>Professional Audio Design</li>
+                    <li>Post-Production (Resolve/Audition)</li>
+                    <li>Professional Photography (RAW)</li>
+                    <li>Motion Graphics (Fusion) & AI</li>
+                    <li>Color Grading</li>
+                    <li>Studio Lighting (LED/Flash)</li>
+                    <li>Process & Workflow Management</li>
+                `,
+                sidebarStack: "TECHNICAL STACK",
+                sidebarStackPrimary: "Primary Software",
+                sidebarStackSecondary: "Secondary Software",
+                sidebarStackCameras: "Cameras & Lenses",
+                sidebarStackAudio: "Audio Gear",
+                sidebarStackLighting: "Lighting & Grip",
+                sidebarStackWorkstation: "Workstation & Mobile",
+                sidebarAcademic: "ACADEMIC",
+                sidebarAcademicDegree: "Master's Degree in Industrial Engineering",
+                sidebarAcademicUni: "Interamericana University of Costa Rica",
+                
+                mainRole: "SENIOR MULTIMEDIA PRODUCER",
+                mainSubrole: "(Video • Photography • Graphic Design • Post-Production • Audio)",
+                mainProfileTitle: "PROFESSIONAL PROFILE",
+                mainProfileText: "Senior Multimedia Producer specialized in full-cycle content creation. I seamlessly integrate professional video production, photography, and graphic design (including on-screen graphics) with high-quality audio engineering. Leveraging 25+ years of media experience and the technical precision of an Industrial Engineer, I deliver comprehensive, high-impact digital assets from concept to final export.",
+                mainExpTitle: "PROFESSIONAL EXPERIENCE",
+                
+                job1Title: "DIGITAL CONTENT PRODUCER",
+                job1Meta: "Freelance / Independent Consultant | 2018 – Present",
+                job1Desc: "Strategic production and post-production of visual content for a diverse portfolio of clients. Specialized in creating high-impact assets for social media (Reels/TikTok) and digital campaigns.",
+                job1List: `
+                    <li>Implement professional video (C-Log 2) and photography (RAW) workflows to elevate brand visual quality across various industries.</li>
+                    <li><strong>Audio & Graphics Mastery:</strong> Leverage expert-level proficiency in <strong>Adobe Audition</strong> and <strong>Canva</strong> to deliver broadcast-quality sound and high-impact graphic assets efficiently.</li>
+                    <li>Design and animate promotional graphics, utilizing <strong>DaVinci Resolve (Fusion)</strong> for high-end on screen graphics and templates.</li>
+                    <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve, etc.)</strong> for high-fidelity image generation and application of <strong>AI-assisted coding</strong> for basic App development, streamlining technical workflows and professional presentations.</li>
+                `,
+
+                job2Title: "SENIOR AUDIO DESIGNER & VOICE ARTIST",
+                job2Meta: "Foundational Experience | Multiple Corporate Clients | 2001 – 2018",
+                job2Desc: "Over 17 years as a lead audio designer and the commercial voice for top-tier brands and advertising agencies. Currently the station voice for AMOR FM.",
+                job2List: `
+                    <li>Served as the key brand voice for clients including: Cerveza Imperial, Pizza Hut, Banco Promerica, Subway, Pepsi, Colgate, Suavitel, Fabuloso, Spoon, Palí, etc.</li>
+                    <li>This experience is the foundation of my 'broadcast' quality standard and my deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
+                    <li>Managed all stages of audio production, from scriptwriting and talent casting to final mix and delivery.</li>
+                `
+            },
+            es: {
+                langBtnText: "View in English",
+                sidebarContact: "CONTACTO",
+                sidebarSkills: "HABILIDADES CLAVE",
+                sidebarSkillsList: `
+                    <li>Producción de Video Integral</li>
+                    <li>Diseño de Audio Profesional</li>
+                    <li>Postproducción (Resolve/Audition)</li>
+                    <li>Fotografía Profesional (RAW)</li>
+                    <li>Gráficos en Movimiento (Fusion) e IA</li>
+                    <li>Etalonaje (Color Grading)</li>
+                    <li>Iluminación de Estudio (LED/Flash)</li>
+                    <li>Gestión de Procesos y Flujos</li>
+                `,
+                sidebarStack: "STACK TÉCNICO",
+                sidebarStackPrimary: "Software Principal",
+                sidebarStackSecondary: "Software Secundario",
+                sidebarStackCameras: "Cámaras y Lentes",
+                sidebarStackAudio: "Equipo de Audio",
+                sidebarStackLighting: "Iluminación y Soportes",
+                sidebarStackWorkstation: "Estación de Trabajo y Móvil",
+                sidebarAcademic: "FORMACIÓN ACADÉMICA",
+                sidebarAcademicDegree: "Maestría en Ingeniería Industrial",
+                sidebarAcademicUni: "Universidad Interamericana de Costa Rica",
+                
+                mainRole: "PRODUCTOR MULTIMEDIA SENIOR",
+                mainSubrole: "(Video • Fotografía • Diseño Gráfico • Postproducción • Audio)",
+                mainProfileTitle: "PERFIL PROFESIONAL",
+                mainProfileText: "Productor Multimedia Senior especializado en la creación de contenido de ciclo completo. Integro a la perfección la producción de video profesional, fotografía y diseño gráfico (incluyendo rotulación) con ingeniería de audio de alta calidad. Aprovechando más de 25 años de experiencia en medios y la precisión técnica de un Ingeniero Industrial, entrego activos digitales integrales y de alto impacto desde el concepto hasta la exportación final.",
+                mainExpTitle: "EXPERIENCIA PROFESIONAL",
+                
+                job1Title: "PRODUCTOR DE CONTENIDO DIGITAL",
+                job1Meta: "Freelance / Consultor Independiente | 2018 – Presente",
+                job1Desc: "Producción estratégica y postproducción de contenido visual para una cartera diversa de clientes. Especializado en la creación de activos de alto impacto para redes sociales (Reels/TikTok) y campañas digitales.",
+                job1List: `
+                    <li>Implementación de flujos de trabajo de video profesional (C-Log 2) y fotografía (RAW) para elevar la calidad visual de la marca en diversas industrias.</li>
+                    <li><strong>Maestría en Audio y Gráficos:</strong> Aprovechamiento de competencia a nivel experto en <strong>Adobe Audition</strong> y <strong>Canva</strong> para entregar sonido con calidad 'broadcast' y activos gráficos de alto impacto de manera eficiente.</li>
+                    <li>Diseño y animación de gráficos promocionales, utilizando <strong>DaVinci Resolve (Fusion)</strong> para rotulación y plantillas de alta gama.</li>
+                    <li><strong>IA e Innovación:</strong> Uso experto de <strong>ComfyUI (Flux, Nanobanana, Reve, etc.)</strong> para generación de imágenes de alta fidelidad y aplicación de <strong>programación asistida por IA</strong> para el desarrollo de Apps básicas, agilizando flujos de trabajo técnicos y presentaciones profesionales.</li>
+                `,
+
+                job2Title: "DISEÑADOR DE AUDIO SENIOR Y LOCUTOR",
+                job2Meta: "Experiencia Fundacional | Múltiples Clientes Corporativos | 2001 – 2018",
+                job2Desc: "Más de 17 años como diseñador de audio principal y voz comercial para marcas de primer nivel y agencias de publicidad. Actualmente voz de la estación para AMOR FM.",
+                job2List: `
+                    <li>Voz de marca clave para clientes incluyendo: Cerveza Imperial, Pizza Hut, Banco Promerica, Subway, Pepsi, Colgate, Suavitel, Fabuloso, Spoon, Palí, etc.</li>
+                    <li>Esta experiencia es la base de mi estándar de calidad 'broadcast' y mi profundo dominio de Adobe Audition, ahora aplicado a la suite Fairlight en Resolve.</li>
+                    <li>Gestión de todas las etapas de producción de audio, desde la redacción de guiones y casting de talentos hasta la mezcla final y entrega.</li>
+                `
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            const t = translations[currentLang];
+            
+            // HTML Tag Lang Attribute
+            document.getElementById('html-tag').lang = currentLang;
+
+            // Button Text
+            document.getElementById('lang-btn-text').innerText = t.langBtnText;
+
+            // Sidebar Updates
+            document.getElementById('sidebar-contact-title').innerText = t.sidebarContact;
+            document.getElementById('sidebar-skills-title').innerText = t.sidebarSkills;
+            document.getElementById('sidebar-skills-list').innerHTML = t.sidebarSkillsList;
+            document.getElementById('sidebar-stack-title').innerText = t.sidebarStack;
+            document.getElementById('sidebar-stack-primary').innerText = t.sidebarStackPrimary;
+            document.getElementById('sidebar-stack-secondary').innerText = t.sidebarStackSecondary;
+            document.getElementById('sidebar-stack-cameras').innerText = t.sidebarStackCameras;
+            document.getElementById('sidebar-stack-audio').innerText = t.sidebarStackAudio;
+            document.getElementById('sidebar-stack-lighting').innerText = t.sidebarStackLighting;
+            document.getElementById('sidebar-stack-workstation').innerText = t.sidebarStackWorkstation;
+            document.getElementById('sidebar-academic-title').innerText = t.sidebarAcademic;
+            document.getElementById('sidebar-academic-degree').innerText = t.sidebarAcademicDegree;
+            document.getElementById('sidebar-academic-uni').innerText = t.sidebarAcademicUni;
+
+            // Main Content Updates
+            document.getElementById('main-role').innerText = t.mainRole;
+            document.getElementById('main-subrole').innerText = t.mainSubrole;
+            document.getElementById('main-profile-title').innerText = t.mainProfileTitle;
+            document.getElementById('main-profile-text').innerText = t.mainProfileText;
+            document.getElementById('main-exp-title').innerText = t.mainExpTitle;
+            
+            document.getElementById('job1-title').innerText = t.job1Title;
+            document.getElementById('job1-meta').innerText = t.job1Meta;
+            document.getElementById('job1-desc').innerText = t.job1Desc;
+            document.getElementById('job1-list').innerHTML = t.job1List;
+
+            document.getElementById('job2-title').innerText = t.job2Title;
+            document.getElementById('job2-meta').innerText = t.job2Meta;
+            document.getElementById('job2-desc').innerText = t.job2Desc;
+            document.getElementById('job2-list').innerHTML = t.job2List;
+        }
+    </script>
 </body>
 </html>
