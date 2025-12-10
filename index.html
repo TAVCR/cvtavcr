@@ -31,7 +31,7 @@
                 padding: 0 !important;
                 background-color: white !important;
                 font-size: 10px !important; 
-                line-height: 1.2 !important; /* Interlineado muy compacto */
+                line-height: 1.2 !important; 
             }
 
             .no-print, button, .fixed {
@@ -87,7 +87,7 @@
                 font-size: 0.85rem !important; 
                 margin-top: 0.5rem !important; 
                 margin-bottom: 0.1rem !important; 
-                color: #f1f5f9 !important; /* Asegurar contraste en sidebar */
+                color: #f1f5f9 !important; 
             }
             /* En main column h4 es oscuro */
             .print-main h4 { color: #1e293b !important; margin-top: 0.5rem !important;}
@@ -102,11 +102,9 @@
                 margin-bottom: 0.5rem !important;
             }
 
-            /* Forzar anulación de márgenes de Tailwind */
             .mb-8 { margin-bottom: 0.5rem !important; }
             .mb-10 { margin-bottom: 0.5rem !important; }
 
-            /* Evitar cortes */
             p, h3, h4, li, img { page-break-inside: avoid; }
         }
     </style>
@@ -170,9 +168,9 @@
                         <li>Professional Audio Design</li>
                         <li>Post-Production (Resolve/Audition)</li>
                         <li>Professional Photography (RAW)</li>
-                        <li>Motion Graphics (Fusion) & AI</li>
+                        <li>On Screen Graphics</li> <!-- CAMBIO AQUÍ -->
                         <li>Color Grading</li>
-                        <li>Studio Lighting (LED/Flash)</li>
+                        <!-- BORRADO Studio Lighting -->
                         <li>Process & Workflow Management</li>
                     </ul>
                 </div>
@@ -209,10 +207,7 @@
                         <li>Godox V1/AD300 | LEDs | DJI Gimbal</li>
                     </ul>
 
-                    <h4 id="sidebar-stack-workstation" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Workstation & Mobile</h4>
-                    <ul id="list-workstation" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
-                        <li>PC: i9-13900KF, RTX 4090 | S25 Ultra</li>
-                    </ul>
+                    <!-- SECCIÓN WORKSTATION BORRADA COMPLETAMENTE AQUÍ -->
                 </div>
 
                 <!-- Academic -->
@@ -289,9 +284,8 @@
                     <li>Professional Audio Design</li>
                     <li>Post-Production (Resolve/Audition)</li>
                     <li>Professional Photography (RAW)</li>
-                    <li>Motion Graphics (Fusion) & AI</li>
+                    <li>On Screen Graphics</li>
                     <li>Color Grading</li>
-                    <li>Studio Lighting (LED/Flash)</li>
                     <li>Process & Workflow Management</li>
                 `,
                 sidebarStack: "TECHNICAL STACK",
@@ -304,8 +298,7 @@
                 listAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
                 sidebarStackLighting: "Lighting & Grip",
                 listLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
-                sidebarStackWorkstation: "Workstation & Mobile",
-                listWorkstation: `<li>PC: i9-13900KF, RTX 4090 | S25 Ultra</li>`,
+                // WORKSTATION BORRADO
                 sidebarAcademic: "ACADEMIC",
                 sidebarAcademicDegree: "Master's in Industrial Engineering",
                 sidebarAcademicUni: "Interamericana University of Costa Rica",
@@ -344,9 +337,8 @@
                     <li>Diseño de Audio Profesional</li>
                     <li>Postproducción (Resolve/Audition)</li>
                     <li>Fotografía Profesional (RAW)</li>
-                    <li>Gráficos en Movimiento (Fusion) e IA</li>
+                    <li>On Screen Graphics</li>
                     <li>Etalonaje (Color Grading)</li>
-                    <li>Iluminación de Estudio (LED/Flash)</li>
                     <li>Gestión de Procesos y Flujos</li>
                 `,
                 sidebarStack: "STACK TÉCNICO",
@@ -359,8 +351,7 @@
                 listAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
                 sidebarStackLighting: "Iluminación y Soportes",
                 listLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
-                sidebarStackWorkstation: "Estación de Trabajo y Móvil",
-                listWorkstation: `<li>PC: i9-13900KF, RTX 4090 | S25 Ultra</li>`,
+                // WORKSTATION BORRADO
                 sidebarAcademic: "FORMACIÓN ACADÉMICA",
                 sidebarAcademicDegree: "Maestría en Ingeniería Industrial",
                 sidebarAcademicUni: "Universidad Interamericana de Costa Rica",
@@ -415,8 +406,9 @@
             document.getElementById('list-audio').innerHTML = t.listAudio;
             document.getElementById('sidebar-stack-lighting').innerText = t.sidebarStackLighting;
             document.getElementById('list-lighting').innerHTML = t.listLighting;
-            document.getElementById('sidebar-stack-workstation').innerText = t.sidebarStackWorkstation;
-            document.getElementById('list-workstation').innerHTML = t.listWorkstation;
+            
+            // Workstation updates removed
+            
             document.getElementById('sidebar-academic-title').innerText = t.sidebarAcademic;
             document.getElementById('sidebar-academic-degree').innerText = t.sidebarAcademicDegree;
             document.getElementById('sidebar-academic-uni').innerText = t.sidebarAcademicUni;
