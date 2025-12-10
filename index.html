@@ -20,7 +20,7 @@
         /* --- REGLAS CRÍTICAS DE IMPRESIÓN --- */
         @page {
             margin: 0; /* Elimina encabezados y pies de página del navegador */
-            size: auto; /* O size: A4 portrait; si el navegador lo soporta bien */
+            size: auto; 
         }
 
         @media print {
@@ -30,17 +30,14 @@
                 margin: 0 !important;
                 padding: 0 !important;
                 background-color: white !important;
-                /* FUENTE AÚN MÁS PEQUEÑA para asegurar ajuste en una página */
                 font-size: 10px !important; 
-                line-height: 1.25 !important; /* Interlineado compacto */
+                line-height: 1.2 !important; /* Interlineado muy compacto */
             }
 
-            /* Ocultar elementos de interfaz */
             .no-print, button, .fixed {
                 display: none !important;
             }
 
-            /* Contenedor Principal: Tabla para columnas iguales */
             .print-container {
                 display: table !important;
                 table-layout: fixed !important;
@@ -55,85 +52,59 @@
                 display: table-row !important;
             }
 
-            /* Sidebar: Reducimos padding drásticamente */
             .print-sidebar {
                 display: table-cell !important;
                 width: 30% !important;
                 vertical-align: top !important;
                 height: 100% !important;
                 background-color: #1e293b !important;
-                padding: 1rem !important; /* Padding reducido a 1rem */
+                padding: 1.5rem 1rem !important; 
             }
 
-            /* Main: Reducimos padding drásticamente */
             .print-main {
                 display: table-cell !important;
                 width: 70% !important;
                 vertical-align: top !important;
                 height: 100% !important;
                 background-color: #ffffff !important;
-                padding: 1rem 1.5rem !important; /* Padding más ajustado */
+                padding: 1.5rem 2rem !important; 
             }
 
-            /* --- AJUSTES ULTRA COMPACTOS --- */
-            
-            /* Títulos */
-            h1 { font-size: 1.8rem !important; margin-bottom: 0.1rem !important; line-height: 1 !important; }
-            h2 { font-size: 1rem !important; margin-bottom: 0.2rem !important; line-height: 1.1 !important; }
-            
-            /* Secciones */
-            section { margin-bottom: 0.5rem !important; }
+            /* --- AJUSTES DE ESPACIADO --- */
+            h1 { font-size: 1.8rem !important; margin-bottom: 0.2rem !important; line-height: 1 !important; }
+            h2 { font-size: 1rem !important; margin-bottom: 0.5rem !important; }
             
             h3 { 
                 font-size: 0.9rem !important; 
                 margin-bottom: 0.3rem !important; 
                 padding-bottom: 0.1rem !important; 
                 margin-top: 0.8rem !important; 
-                border-bottom-width: 1px !important; /* Línea más fina */
+                border-bottom-width: 1px !important; 
             }
-            /* Primer h3 sin margen superior */
             section:first-of-type h3, .print-sidebar > div:first-child h3 { margin-top: 0 !important; }
 
-            /* Subtítulos de trabajo y software */
             h4 { 
                 font-size: 0.85rem !important; 
-                margin-top: 0.4rem !important; 
+                margin-top: 0.5rem !important; 
                 margin-bottom: 0.1rem !important; 
+                color: #f1f5f9 !important; /* Asegurar contraste en sidebar */
             }
-            
-            /* Texto general */
-            p { 
-                font-size: 0.8rem !important; 
-                margin-bottom: 0.2rem !important; 
-            }
-            
-            /* Listas */
-            ul { margin-top: 0 !important; margin-bottom: 0.3rem !important; }
-            li { 
-                margin-bottom: 0 !important; /* Sin margen entre items */
-                font-size: 0.8rem !important; 
-            }
+            /* En main column h4 es oscuro */
+            .print-main h4 { color: #1e293b !important; margin-top: 0.5rem !important;}
 
-            /* Foto aún más pequeña */
+            p { font-size: 0.8rem !important; margin-bottom: 0.2rem !important; }
+            ul { margin-top: 0 !important; margin-bottom: 0.2rem !important; }
+            li { margin-bottom: 0.1rem !important; font-size: 0.8rem !important; }
+
             .print-sidebar img {
-                width: 80px !important;
-                height: 80px !important;
+                width: 90px !important;
+                height: 90px !important;
                 margin-bottom: 0.5rem !important;
-                border-width: 2px !important;
             }
 
-            /* Iconos SVG más pequeños */
-            svg {
-                width: 0.8rem !important;
-                height: 0.8rem !important;
-            }
-
-            /* Ajustes específicos para ganar espacio vertical */
+            /* Forzar anulación de márgenes de Tailwind */
             .mb-8 { margin-bottom: 0.5rem !important; }
             .mb-10 { margin-bottom: 0.5rem !important; }
-            .space-y-3 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: 0.3rem !important; }
-            .space-y-2 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: 0.1rem !important; }
-            .space-y-1 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: 0 !important; }
 
             /* Evitar cortes */
             p, h3, h4, li, img { page-break-inside: avoid; }
@@ -142,18 +113,14 @@
 </head>
 <body class="bg-gray-100 p-8 print:p-0 print:bg-white relative">
 
-    <!-- Contenedor de Botones Flotantes (Solo visibles en pantalla) -->
+    <!-- Contenedor de Botones -->
     <div class="fixed bottom-8 right-8 flex flex-col gap-3 print:hidden z-50">
-        
-        <!-- Botón Toggle Idioma -->
         <button onclick="toggleLanguage()" id="lang-btn" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer border-2 border-white/20 backdrop-blur-sm w-full">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
             </svg>
             <span id="lang-btn-text">Ver en Español</span>
         </button>
-
-        <!-- Botón Descargar PDF -->
         <button onclick="window.print()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer border-2 border-white/20 backdrop-blur-sm w-full">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -162,16 +129,12 @@
         </button>
     </div>
 
-    <!-- Contenedor principal del CV -->
+    <!-- CV Container -->
     <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg overflow-hidden print-container">
-        
-        <!-- Contenedor Flex para columnas de igual altura. print-row -->
         <div class="flex flex-col md:flex-row print-row min-h-screen">
 
-            <!-- INICIO DE LA COLUMNA LATERAL (Sidebar) -->
+            <!-- SIDEBAR -->
             <div class="w-full md:w-1/3 bg-slate-800 text-slate-100 p-8 print-sidebar">
-                
-                <!-- Foto de Perfil -->
                 <div class="text-center mb-8">
                     <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-sky-500 object-cover shadow-lg">
                 </div>
@@ -199,11 +162,10 @@
                     </ul>
                 </div>
 
-                <!-- Habilidades Clave -->
+                <!-- Skills -->
                 <div class="mb-8">
                     <h3 id="sidebar-skills-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CORE SKILLS</h3>
                     <ul id="sidebar-skills-list" class="text-sm text-slate-200 list-inside space-y-2 font-medium">
-                        <!-- Se llena con JS -->
                         <li>End-to-End Video Production</li>
                         <li>Professional Audio Design</li>
                         <li>Post-Production (Resolve/Audition)</li>
@@ -215,65 +177,55 @@
                     </ul>
                 </div>
 
-                <!-- Technical Stack -->
+                <!-- Tech Stack - COMPACTADO -->
                 <div class="mb-8">
                     <h3 id="sidebar-stack-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">TECHNICAL STACK</h3>
                     
                     <h4 id="sidebar-stack-primary" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Primary Software</h4>
-                    <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                    <ul id="list-primary" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
                         <li>DaVinci Resolve Studio</li>
                         <li>Adobe Audition</li>
                         <li>Lightroom</li>
                     </ul>
 
                     <h4 id="sidebar-stack-secondary" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Secondary Software</h4>
-                    <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
-                        <li>Canva Pro</li>
-                        <li>Adobe Photoshop</li>
+                    <ul id="list-secondary" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                        <li>Canva Pro, Photoshop</li>
                         <li>ComfyUI / ElevenLabs</li>
                     </ul>
 
                     <h4 id="sidebar-stack-cameras" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Cameras & Lenses</h4>
-                    <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
-                        <li>Canon R5 II Camera</li>
-                        <li>Canon RF 24-105mm f/2.8 L</li>
-                        <li>Canon RF 35mm f/1.8 STM</li>
+                    <ul id="list-cameras" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                        <li>Canon R5 II | RF 24-105 L | RF 35mm</li>
                     </ul>
 
                     <h4 id="sidebar-stack-audio" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Audio Gear</h4>
-                    <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
-                        <li>Neumann Microphones (U87/M149)</li>
-                        <li>Universal Audio Apollo Twin X</li>
+                    <ul id="list-audio" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                        <li>Neumann U87/M149 | Apollo Twin X</li>
                     </ul>
                     
                     <h4 id="sidebar-stack-lighting" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Lighting & Grip</h4>
-                    <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
-                        <li>Godox V1 Pro & AD300 Pro</li>
-                        <li>Pro Master LED Video Lights</li>
-                        <li>DJI Osmo Mobile 6 Gimbal</li>
+                    <ul id="list-lighting" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                        <li>Godox V1/AD300 | LEDs | DJI Gimbal</li>
                     </ul>
 
                     <h4 id="sidebar-stack-workstation" class="font-semibold text-slate-100 text-sm mt-4 mb-2 uppercase tracking-wide">Workstation & Mobile</h4>
-                    <ul class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
-                        <li>PC: 13900KF, RTX 4090, 64GB RAM</li>
-                        <li>Samsung S25 Ultra</li>
+                    <ul id="list-workstation" class="text-sm text-slate-300 list-disc list-inside space-y-1 font-medium">
+                        <li>PC: i9-13900KF, RTX 4090 | S25 Ultra</li>
                     </ul>
                 </div>
 
-                <!-- Formación Académica -->
+                <!-- Academic -->
                 <div>
                     <h3 id="sidebar-academic-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">ACADEMIC</h3>
-                    <p id="sidebar-academic-degree" class="font-semibold text-sm text-slate-100">Master's Degree in Industrial Engineering</p>
+                    <p id="sidebar-academic-degree" class="font-semibold text-sm text-slate-100">Master's in Industrial Engineering</p>
                     <p id="sidebar-academic-uni" class="text-sm text-slate-300 italic font-medium">Interamericana University of Costa Rica</p>
                 </div>
-
             </div>
-            <!-- FIN DE LA COLUMNA LATERAL -->
 
-            <!-- INICIO DE LA COLUMNA PRINCIPAL -->
+            <!-- MAIN CONTENT -->
             <div class="w-full md:w-2/3 p-10 print-main">
 
-                <!-- Encabezado con Nombre y Título -->
                 <header class="mb-10">
                     <h1 class="font-bold text-5xl text-slate-800 mb-2">GUSTAVO GONZÁLEZ</h1>
                     <h2 class="font-semibold text-2xl text-sky-700">
@@ -282,51 +234,46 @@
                     </h2>
                 </header>
 
-                <!-- Sección de Perfil Profesional -->
                 <section class="mb-10">
                     <h3 id="main-profile-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-4">PROFESSIONAL PROFILE</h3>
                     <p id="main-profile-text" class="text-slate-700 leading-relaxed text-base font-medium">
-                        Senior Multimedia Producer specialized in full-cycle content creation. I seamlessly integrate professional video production, photography, and graphic design (including on-screen graphics) with high-quality audio engineering. Leveraging 25+ years of media experience and the technical precision of an Industrial Engineer, I deliver comprehensive, high-impact digital assets from concept to final export.
+                        Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.
                     </p>
                 </section>
 
-                <!-- Sección de Experiencia Profesional -->
                 <section class="mb-10">
                     <h3 id="main-exp-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-6">PROFESSIONAL EXPERIENCE</h3>
                     
-                    <!-- Primer Puesto -->
+                    <!-- Job 1 -->
                     <div class="mb-8">
                         <h4 id="job1-title" class="font-semibold text-xl text-slate-800">DIGITAL CONTENT PRODUCER</h4>
                         <p id="job1-meta" class="text-md font-semibold text-slate-600 italic">Freelance / Independent Consultant | 2018 – Present</p>
                         <p id="job1-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
-                            Strategic production and post-production of visual content for a diverse portfolio of clients. Specialized in creating high-impact assets for social media (Reels/TikTok) and digital campaigns.
+                            Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).
                         </p>
                         <ul id="job1-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
-                            <li>Implement professional video (C-Log 2) and photography (RAW) workflows to elevate brand visual quality across various industries.</li>
-                            <li><strong>Audio & Graphics Mastery:</strong> Leverage expert-level proficiency in <strong>Adobe Audition</strong> and <strong>Canva</strong> to deliver broadcast-quality sound and high-impact graphic assets efficiently.</li>
-                            <li>Design and animate promotional graphics, utilizing <strong>DaVinci Resolve (Fusion)</strong> for high-end on screen graphics and templates.</li>
-                            <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve, etc.)</strong> for high-fidelity image generation and application of <strong>AI-assisted coding</strong> for basic App development, streamlining technical workflows and professional presentations.</li>
+                            <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
+                            <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
+                            <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
+                            <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>
                         </ul>
                     </div>
 
-                    <!-- Segundo Puesto -->
+                    <!-- Job 2 -->
                     <div class="mb-8"> 
                         <h4 id="job2-title" class="font-semibold text-xl text-slate-800">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
                         <p id="job2-meta" class="text-md font-semibold text-slate-600 italic">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
                         <p id="job2-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
-                            Over 17 years as a lead audio designer and the commercial voice for top-tier brands and advertising agencies. Currently the station voice for AMOR FM.
+                            17+ years as lead audio designer/voice talent for top brands. Current station voice for AMOR FM.
                         </p>
                         <ul id="job2-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
-                            <li>Served as the key brand voice for clients including: Cerveza Imperial, Pizza Hut, Banco Promerica, Subway, Pepsi, Colgate, Suavitel, Fabuloso, Spoon, Palí, etc.</li>
-                            <li>This experience is the foundation of my 'broadcast' quality standard and my deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
-                            <li>Managed all stages of audio production, from scriptwriting and talent casting to final mix and delivery.</li>
+                            <li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
+                            <li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
+                            <li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>
                         </ul>
                     </div>
                 </section>
-
             </div>
-            <!-- FIN DE LA COLUMNA PRINCIPAL -->
-
         </div>
     </div>
 
@@ -350,37 +297,42 @@
                 sidebarStack: "TECHNICAL STACK",
                 sidebarStackPrimary: "Primary Software",
                 sidebarStackSecondary: "Secondary Software",
+                listSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
                 sidebarStackCameras: "Cameras & Lenses",
+                listCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
                 sidebarStackAudio: "Audio Gear",
+                listAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
                 sidebarStackLighting: "Lighting & Grip",
+                listLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
                 sidebarStackWorkstation: "Workstation & Mobile",
+                listWorkstation: `<li>PC: i9-13900KF, RTX 4090 | S25 Ultra</li>`,
                 sidebarAcademic: "ACADEMIC",
-                sidebarAcademicDegree: "Master's Degree in Industrial Engineering",
+                sidebarAcademicDegree: "Master's in Industrial Engineering",
                 sidebarAcademicUni: "Interamericana University of Costa Rica",
                 
                 mainRole: "SENIOR MULTIMEDIA PRODUCER",
                 mainSubrole: "(Video • Photography • Graphic Design • Post-Production • Audio)",
                 mainProfileTitle: "PROFESSIONAL PROFILE",
-                mainProfileText: "Senior Multimedia Producer specialized in full-cycle content creation. I seamlessly integrate professional video production, photography, and graphic design (including on-screen graphics) with high-quality audio engineering. Leveraging 25+ years of media experience and the technical precision of an Industrial Engineer, I deliver comprehensive, high-impact digital assets from concept to final export.",
+                mainProfileText: "Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.",
                 mainExpTitle: "PROFESSIONAL EXPERIENCE",
                 
                 job1Title: "DIGITAL CONTENT PRODUCER",
                 job1Meta: "Freelance / Independent Consultant | 2018 – Present",
-                job1Desc: "Strategic production and post-production of visual content for a diverse portfolio of clients. Specialized in creating high-impact assets for social media (Reels/TikTok) and digital campaigns.",
+                job1Desc: "Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).",
                 job1List: `
-                    <li>Implement professional video (C-Log 2) and photography (RAW) workflows to elevate brand visual quality across various industries.</li>
-                    <li><strong>Audio & Graphics Mastery:</strong> Leverage expert-level proficiency in <strong>Adobe Audition</strong> and <strong>Canva</strong> to deliver broadcast-quality sound and high-impact graphic assets efficiently.</li>
-                    <li>Design and animate promotional graphics, utilizing <strong>DaVinci Resolve (Fusion)</strong> for high-end on screen graphics and templates.</li>
-                    <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve, etc.)</strong> for high-fidelity image generation and application of <strong>AI-assisted coding</strong> for basic App development, streamlining technical workflows and professional presentations.</li>
+                    <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
+                    <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
+                    <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
+                    <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>
                 `,
 
                 job2Title: "SENIOR AUDIO DESIGNER & VOICE ARTIST",
                 job2Meta: "Foundational Experience | Multiple Corporate Clients | 2001 – 2018",
-                job2Desc: "Over 17 years as a lead audio designer and the commercial voice for top-tier brands and advertising agencies. Currently the station voice for AMOR FM.",
+                job2Desc: "17+ years as lead audio designer/voice talent for top brands. Current station voice for AMOR FM.",
                 job2List: `
-                    <li>Served as the key brand voice for clients including: Cerveza Imperial, Pizza Hut, Banco Promerica, Subway, Pepsi, Colgate, Suavitel, Fabuloso, Spoon, Palí, etc.</li>
-                    <li>This experience is the foundation of my 'broadcast' quality standard and my deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
-                    <li>Managed all stages of audio production, from scriptwriting and talent casting to final mix and delivery.</li>
+                    <li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
+                    <li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
+                    <li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>
                 `
             },
             es: {
@@ -400,10 +352,15 @@
                 sidebarStack: "STACK TÉCNICO",
                 sidebarStackPrimary: "Software Principal",
                 sidebarStackSecondary: "Software Secundario",
+                listSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
                 sidebarStackCameras: "Cámaras y Lentes",
+                listCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
                 sidebarStackAudio: "Equipo de Audio",
+                listAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
                 sidebarStackLighting: "Iluminación y Soportes",
+                listLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
                 sidebarStackWorkstation: "Estación de Trabajo y Móvil",
+                listWorkstation: `<li>PC: i9-13900KF, RTX 4090 | S25 Ultra</li>`,
                 sidebarAcademic: "FORMACIÓN ACADÉMICA",
                 sidebarAcademicDegree: "Maestría en Ingeniería Industrial",
                 sidebarAcademicUni: "Universidad Interamericana de Costa Rica",
@@ -411,26 +368,26 @@
                 mainRole: "PRODUCTOR MULTIMEDIA SENIOR",
                 mainSubrole: "(Video • Fotografía • Diseño Gráfico • Postproducción • Audio)",
                 mainProfileTitle: "PERFIL PROFESIONAL",
-                mainProfileText: "Productor Multimedia Senior especializado en la creación de contenido de ciclo completo. Integro a la perfección la producción de video profesional, fotografía y diseño gráfico (incluyendo rotulación) con ingeniería de audio de alta calidad. Aprovechando más de 25 años de experiencia en medios y la precisión técnica de un Ingeniero Industrial, entrego activos digitales integrales y de alto impacto desde el concepto hasta la exportación final.",
+                mainProfileText: "Productor Multimedia Senior con más de 25 años de experiencia. Integro video profesional, fotografía, diseño gráfico e ingeniería de audio de alta gama. Combino visión artística con la precisión de la Ingeniería Industrial para entregar activos digitales de alto impacto.",
                 mainExpTitle: "EXPERIENCIA PROFESIONAL",
                 
                 job1Title: "PRODUCTOR DE CONTENIDO DIGITAL",
                 job1Meta: "Freelance / Consultor Independiente | 2018 – Presente",
-                job1Desc: "Producción estratégica y postproducción de contenido visual para una cartera diversa de clientes. Especializado en la creación de activos de alto impacto para redes sociales (Reels/TikTok) y campañas digitales.",
+                job1Desc: "Producción estratégica de contenido visual para clientes diversos (Redes Sociales/Campañas Digitales).",
                 job1List: `
-                    <li>Implementación de flujos de trabajo de video profesional (C-Log 2) y fotografía (RAW) para elevar la calidad visual de la marca en diversas industrias.</li>
-                    <li><strong>Maestría en Audio y Gráficos:</strong> Aprovechamiento de competencia a nivel experto en <strong>Adobe Audition</strong> y <strong>Canva</strong> para entregar sonido con calidad 'broadcast' y activos gráficos de alto impacto de manera eficiente.</li>
-                    <li>Diseño y animación de gráficos promocionales, utilizando <strong>DaVinci Resolve (Fusion)</strong> para rotulación y plantillas de alta gama.</li>
-                    <li><strong>IA e Innovación:</strong> Uso experto de <strong>ComfyUI (Flux, Nanobanana, Reve, etc.)</strong> para generación de imágenes de alta fidelidad y aplicación de <strong>programación asistida por IA</strong> para el desarrollo de Apps básicas, agilizando flujos de trabajo técnicos y presentaciones profesionales.</li>
+                    <li>Implementación de flujos de video profesional (C-Log 2) y foto (RAW) para elevar calidad de marca.</li>
+                    <li><strong>Audio y Gráficos:</strong> Uso experto de <strong>Audition</strong> y <strong>Canva</strong> para sonido 'broadcast' y gráficos de impacto.</li>
+                    <li>Diseño y animación de gráficos/plantillas usando <strong>DaVinci Resolve (Fusion)</strong>.</li>
+                    <li><strong>IA e Innovación:</strong> Uso experto de <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> para generación de imagen e <strong>IA para código</strong> (Apps básicas y optimización de flujos).</li>
                 `,
 
                 job2Title: "DISEÑADOR DE AUDIO SENIOR Y LOCUTOR",
                 job2Meta: "Experiencia Fundacional | Múltiples Clientes Corporativos | 2001 – 2018",
-                job2Desc: "Más de 17 años como diseñador de audio principal y voz comercial para marcas de primer nivel y agencias de publicidad. Actualmente voz de la estación para AMOR FM.",
+                job2Desc: "Más de 17 años como diseñador de audio/voz principal para grandes marcas. Voz actual de AMOR FM.",
                 job2List: `
-                    <li>Voz de marca clave para clientes incluyendo: Cerveza Imperial, Pizza Hut, Banco Promerica, Subway, Pepsi, Colgate, Suavitel, Fabuloso, Spoon, Palí, etc.</li>
-                    <li>Esta experiencia es la base de mi estándar de calidad 'broadcast' y mi profundo dominio de Adobe Audition, ahora aplicado a la suite Fairlight en Resolve.</li>
-                    <li>Gestión de todas las etapas de producción de audio, desde la redacción de guiones y casting de talentos hasta la mezcla final y entrega.</li>
+                    <li>Voz clave para: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
+                    <li>Dominio profundo de Adobe Audition, ahora aplicado a Fairlight en Resolve.</li>
+                    <li>Gestión completa del ciclo de audio: guión, casting, mezcla, entrega.</li>
                 `
             }
         };
@@ -441,28 +398,30 @@
             currentLang = currentLang === 'en' ? 'es' : 'en';
             const t = translations[currentLang];
             
-            // HTML Tag Lang Attribute
             document.getElementById('html-tag').lang = currentLang;
-
-            // Button Text
             document.getElementById('lang-btn-text').innerText = t.langBtnText;
 
-            // Sidebar Updates
+            // Sidebar
             document.getElementById('sidebar-contact-title').innerText = t.sidebarContact;
             document.getElementById('sidebar-skills-title').innerText = t.sidebarSkills;
             document.getElementById('sidebar-skills-list').innerHTML = t.sidebarSkillsList;
             document.getElementById('sidebar-stack-title').innerText = t.sidebarStack;
             document.getElementById('sidebar-stack-primary').innerText = t.sidebarStackPrimary;
             document.getElementById('sidebar-stack-secondary').innerText = t.sidebarStackSecondary;
+            document.getElementById('list-secondary').innerHTML = t.listSecondary;
             document.getElementById('sidebar-stack-cameras').innerText = t.sidebarStackCameras;
+            document.getElementById('list-cameras').innerHTML = t.listCameras;
             document.getElementById('sidebar-stack-audio').innerText = t.sidebarStackAudio;
+            document.getElementById('list-audio').innerHTML = t.listAudio;
             document.getElementById('sidebar-stack-lighting').innerText = t.sidebarStackLighting;
+            document.getElementById('list-lighting').innerHTML = t.listLighting;
             document.getElementById('sidebar-stack-workstation').innerText = t.sidebarStackWorkstation;
+            document.getElementById('list-workstation').innerHTML = t.listWorkstation;
             document.getElementById('sidebar-academic-title').innerText = t.sidebarAcademic;
             document.getElementById('sidebar-academic-degree').innerText = t.sidebarAcademicDegree;
             document.getElementById('sidebar-academic-uni').innerText = t.sidebarAcademicUni;
 
-            // Main Content Updates
+            // Main
             document.getElementById('main-role').innerText = t.mainRole;
             document.getElementById('main-subrole').innerText = t.mainSubrole;
             document.getElementById('main-profile-title').innerText = t.mainProfileTitle;
