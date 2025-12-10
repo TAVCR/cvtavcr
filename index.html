@@ -20,7 +20,7 @@
         /* --- REGLAS CRÍTICAS DE IMPRESIÓN --- */
         @page {
             margin: 0; /* Elimina encabezados y pies de página del navegador */
-            size: auto;
+            size: auto; /* O size: A4 portrait; si el navegador lo soporta bien */
         }
 
         @media print {
@@ -30,8 +30,9 @@
                 margin: 0 !important;
                 padding: 0 !important;
                 background-color: white !important;
-                /* Fuente base ligeramente más pequeña para que quepa todo */
-                font-size: 11px !important; 
+                /* FUENTE AÚN MÁS PEQUEÑA para asegurar ajuste en una página */
+                font-size: 10px !important; 
+                line-height: 1.25 !important; /* Interlineado compacto */
             }
 
             /* Ocultar elementos de interfaz */
@@ -39,7 +40,7 @@
                 display: none !important;
             }
 
-            /* Contenedor Principal: Se comporta como tabla para garantizar altura igual */
+            /* Contenedor Principal: Tabla para columnas iguales */
             .print-container {
                 display: table !important;
                 table-layout: fixed !important;
@@ -50,67 +51,92 @@
                 border-radius: 0 !important;
             }
             
-            /* Fila */
             .print-row {
                 display: table-row !important;
             }
 
-            /* Sidebar: Celda de tabla COMPACTADA */
+            /* Sidebar: Reducimos padding drásticamente */
             .print-sidebar {
                 display: table-cell !important;
-                width: 30% !important; /* Ligeramente más estrecha para dar espacio al principal */
+                width: 30% !important;
                 vertical-align: top !important;
                 height: 100% !important;
                 background-color: #1e293b !important;
-                padding: 1.5rem !important; /* Padding reducido */
+                padding: 1rem !important; /* Padding reducido a 1rem */
             }
 
-            /* Contenido Principal: Celda de tabla COMPACTADA */
+            /* Main: Reducimos padding drásticamente */
             .print-main {
                 display: table-cell !important;
                 width: 70% !important;
                 vertical-align: top !important;
                 height: 100% !important;
                 background-color: #ffffff !important;
-                padding: 1.5rem 2rem !important; /* Padding reducido */
+                padding: 1rem 1.5rem !important; /* Padding más ajustado */
             }
 
-            /* --- REDUCCIÓN DE TAMAÑOS PARA AJUSTE EN UNA PÁGINA --- */
+            /* --- AJUSTES ULTRA COMPACTOS --- */
             
             /* Títulos */
-            h1 { font-size: 2rem !important; margin-bottom: 0.25rem !important; line-height: 1 !important; }
-            h2 { font-size: 1.1rem !important; margin-bottom: 0.25rem !important; }
+            h1 { font-size: 1.8rem !important; margin-bottom: 0.1rem !important; line-height: 1 !important; }
+            h2 { font-size: 1rem !important; margin-bottom: 0.2rem !important; line-height: 1.1 !important; }
+            
+            /* Secciones */
+            section { margin-bottom: 0.5rem !important; }
+            
             h3 { 
-                font-size: 1rem !important; 
-                margin-bottom: 0.5rem !important; 
+                font-size: 0.9rem !important; 
+                margin-bottom: 0.3rem !important; 
                 padding-bottom: 0.1rem !important; 
-                margin-top: 1rem !important; /* Espacio antes de cada sección */
+                margin-top: 0.8rem !important; 
+                border-bottom-width: 1px !important; /* Línea más fina */
             }
-            /* Primer h3 no necesita margen arriba */
+            /* Primer h3 sin margen superior */
             section:first-of-type h3, .print-sidebar > div:first-child h3 { margin-top: 0 !important; }
 
-            /* Subtítulos y textos */
-            h4 { font-size: 0.95rem !important; margin-top: 0.5rem !important; margin-bottom: 0.1rem !important; }
-            p { font-size: 0.85rem !important; margin-bottom: 0.25rem !important; line-height: 1.3 !important; }
+            /* Subtítulos de trabajo y software */
+            h4 { 
+                font-size: 0.85rem !important; 
+                margin-top: 0.4rem !important; 
+                margin-bottom: 0.1rem !important; 
+            }
             
-            /* Listas compactas */
-            ul { margin-bottom: 0.5rem !important; }
-            li { margin-bottom: 0.1rem !important; font-size: 0.85rem !important; line-height: 1.3 !important; }
+            /* Texto general */
+            p { 
+                font-size: 0.8rem !important; 
+                margin-bottom: 0.2rem !important; 
+            }
             
-            /* Foto de perfil más pequeña */
-            .print-sidebar img {
-                width: 100px !important;
-                height: 100px !important;
-                margin-bottom: 1rem !important;
+            /* Listas */
+            ul { margin-top: 0 !important; margin-bottom: 0.3rem !important; }
+            li { 
+                margin-bottom: 0 !important; /* Sin margen entre items */
+                font-size: 0.8rem !important; 
             }
 
-            /* Forzar anulación de márgenes grandes de Tailwind */
-            .mb-8, .mb-10 { margin-bottom: 0.5rem !important; }
-            header.mb-10 { margin-bottom: 1rem !important; }
+            /* Foto aún más pequeña */
+            .print-sidebar img {
+                width: 80px !important;
+                height: 80px !important;
+                margin-bottom: 0.5rem !important;
+                border-width: 2px !important;
+            }
 
-            /* Evita cortes feos dentro de textos */
-            p, h3, h4, li { page-break-inside: avoid; }
-            img { page-break-inside: avoid; }
+            /* Iconos SVG más pequeños */
+            svg {
+                width: 0.8rem !important;
+                height: 0.8rem !important;
+            }
+
+            /* Ajustes específicos para ganar espacio vertical */
+            .mb-8 { margin-bottom: 0.5rem !important; }
+            .mb-10 { margin-bottom: 0.5rem !important; }
+            .space-y-3 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: 0.3rem !important; }
+            .space-y-2 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: 0.1rem !important; }
+            .space-y-1 > :not([hidden]) ~ :not([hidden]) { --tw-space-y-reverse: 0; margin-top: 0 !important; }
+
+            /* Evitar cortes */
+            p, h3, h4, li, img { page-break-inside: avoid; }
         }
     </style>
 </head>
@@ -139,7 +165,7 @@
     <!-- Contenedor principal del CV -->
     <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg overflow-hidden print-container">
         
-        <!-- Contenedor Flex para columnas de igual altura. AÑADIDO: print-row -->
+        <!-- Contenedor Flex para columnas de igual altura. print-row -->
         <div class="flex flex-col md:flex-row print-row min-h-screen">
 
             <!-- INICIO DE LA COLUMNA LATERAL (Sidebar) -->
