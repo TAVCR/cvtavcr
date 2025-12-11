@@ -12,6 +12,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
+        /* Variable CSS para la escala de impresión */
+        :root {
+            --print-scale: 1;
+        }
+
         /* Aplicar la fuente "Montserrat" a todo */
         body {
             font-family: 'Montserrat', sans-serif;
@@ -23,7 +28,7 @@
             min-height: 100vh;
         }
 
-        /* --- VISTA DE DOCUMENTO A4 --- */
+        /* --- VISTA DE DOCUMENTO A4 (WEB) --- */
         .page-a4 {
             background: white;
             width: 210mm;
@@ -45,6 +50,12 @@
                 background-color: white !important;
                 padding: 0 !important;
                 display: block !important;
+                /* AQUI SE APLICA LA MAGIA DE LA ESCALA MANUAL */
+                zoom: var(--print-scale); 
+                /* Soporte para Firefox (aunque zoom suele bastar en Chrome/Edge) */
+                -moz-transform: scale(var(--print-scale));
+                -moz-transform-origin: top left;
+                width: 100% !important;
             }
 
             .page-a4 {
@@ -56,7 +67,8 @@
                 flex-direction: column !important;
             }
 
-            .no-print, button, .fixed {
+            /* Ocultar interfaz de usuario en impresión */
+            .no-print, button, .fixed, #print-controls {
                 display: none !important;
             }
             
@@ -64,17 +76,6 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
-
-            /* AJUSTES DE IMPRESIÓN ESPECÍFICOS PARA FUENTES Y PADDING */
-            h1 { font-size: 24pt !important; margin-bottom: 0.2rem !important; }
-            h2 { font-size: 12pt !important; margin-bottom: 1rem !important; }
-            h3 { font-size: 10pt !important; }
-            
-            .sidebar { padding: 3rem 1.5rem 1rem 1.5rem !important; }
-            .main-content { padding: 1.25rem 2.5rem 0 2.5rem !important; }
-            .bottom-bar { padding: 1rem 2.5rem 1.5rem 2.5rem !important; }
-            
-            #main-profile-text { margin-top: 1rem !important; margin-bottom: 1rem !important; }
         }
 
         /* --- ESTRUCTURA FLEXIBLE --- */
@@ -99,6 +100,7 @@
         .main-content {
             width: 68%;
             background-color: #ffffff;
+            /* Se mantiene intacto según la última versión */
             padding: 1.25rem 2.5rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
@@ -110,8 +112,7 @@
             background-color: #1e293b; 
             color: #f1f5f9;
             padding: 1.5rem 2.5rem 3rem 2.5rem;
-            /* AJUSTE REALIZADO: Eliminado el borde superior para lograr la L continua */
-            border-top: none; 
+            border-top: none; /* Sin borde para fusión perfecta */
             flex-shrink: 0;
         }
 
@@ -144,17 +145,19 @@
         .main-content h4 { color: #334155; margin-top: 1rem; }
         .sidebar h4, .bottom-bar h4 { color: #e2e8f0; margin-top: 0.5rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
 
-        /* Estilos de texto */
+        /* COMPRESIÓN DE TEXTO */
         p, li { 
             font-size: 0.85rem; 
             line-height: 1.35; 
         }
         
+        /* Justificado Columna Derecha (Blanca) */
         .main-content p, .main-content li { 
             color: #475569; 
             text-align: justify !important;
         }
 
+        /* Justificado Columna Izquierda (Azul) */
         .sidebar p, .sidebar li { 
             color: #cbd5e1;
             text-align: justify !important; 
@@ -168,6 +171,7 @@
         
         .sidebar li, .bottom-bar li { margin-bottom: 0.2rem; }
 
+        /* Estilos de perfil */
         #main-profile-text {
             margin-bottom: 1rem;
             margin-top: 1rem !important; 
@@ -176,6 +180,7 @@
         }
         #main-profile-title { margin-bottom: 0.5rem; }
 
+        /* Contenedor distribuido del sidebar */
         .sidebar-distribute {
             flex-grow: 1;
             display: flex;
@@ -200,9 +205,35 @@
         .icon { width: 1rem; height: 1rem; color: #38bdf8; margin-right: 0.5rem; flex-shrink: 0; margin-top: 2px; }
         .contact-item { display: flex; align-items: flex-start; margin-bottom: 0.5rem; }
 
+        @media print {
+            .sidebar { padding: 3rem 1.5rem 2rem 1.5rem !important; }
+            .main-content { padding: 1.25rem 2.5rem 0 2.5rem !important; }
+            .bottom-bar { padding: 1.5rem 2.5rem 3rem 2.5rem !important; }
+            
+            #main-profile-text {
+                margin-top: 1rem !important; 
+                margin-bottom: 1rem !important;
+            }
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- CONTROL DE ESCALA PARA IMPRESIÓN -->
+    <div id="print-controls" class="fixed bottom-32 right-8 z-50 bg-slate-800 p-4 rounded-lg shadow-xl border border-slate-600 print:hidden flex flex-col gap-2 w-64 backdrop-blur-sm bg-opacity-95">
+        <div class="flex items-center justify-between border-b border-slate-500 pb-2 mb-1">
+            <h4 class="text-white text-xs font-bold uppercase tracking-wider">Calibrar Impresión</h4>
+            <span id="scale-value" class="font-mono text-sky-400 font-bold text-sm">1.00</span>
+        </div>
+        
+        <input type="range" id="print-scale-slider" min="0.5" max="1.1" step="0.01" value="1.00" 
+               class="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-sky-500 hover:accent-sky-400">
+               
+        <p class="text-[10px] text-slate-400 mt-1 leading-tight text-justify">
+            <span class="text-sky-400 font-bold">Instrucciones:</span> Si el PDF corta contenido, reduce este valor (ej: 0.95) y vuelve a pulsar "PDF". La vista web no cambiará, solo la impresión.
+        </p>
+    </div>
 
     <!-- Botones Flotantes -->
     <div class="fixed bottom-8 right-8 flex flex-col gap-3 print:hidden z-50">
@@ -291,7 +322,7 @@
 
                 <section>
                     <h3 id="main-profile-title">PROFESSIONAL PROFILE</h3>
-                    <p id="main-profile-text">
+                    <p id="main-profile-text" class="text-justify">
                         Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.
                     </p>
                 </section>
@@ -500,6 +531,16 @@
             document.getElementById('footer-stack-audio').innerText = t.footerStackAudio;
             document.getElementById('footer-list-audio').innerHTML = t.footerListAudio;
             document.getElementById('footer-stack-lighting').innerText = t.footerStackLighting;
+        }
+
+        // CONTROL DE ESCALA DINÁMICO
+        const slider = document.getElementById('print-scale-slider');
+        const output = document.getElementById('scale-value');
+        const root = document.documentElement;
+
+        slider.oninput = function() {
+            output.innerHTML = parseFloat(this.value).toFixed(2);
+            root.style.setProperty('--print-scale', this.value);
         }
     </script>
 </body>
