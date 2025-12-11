@@ -64,6 +64,17 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            /* AJUSTE CLAVE 1: Fuentes más grandes en impresión para compensar */
+            h1 { font-size: 26pt !important; margin-bottom: 5pt !important; } /* Nombre más grande */
+            h2 { font-size: 14pt !important; margin-bottom: 15pt !important; } /* Título más visible */
+            h3 { font-size: 11pt !important; } /* Subtítulos más claros */
+            
+            /* Ajuste de cuerpo de texto para que no sea minúsculo */
+            p, li, .contact-text { font-size: 9pt !important; line-height: 1.35 !important; }
+            
+            /* Sidebar text un poco más pequeño para que quepa todo bien justificado */
+            .sidebar p, .sidebar li { font-size: 8.5pt !important; }
         }
 
         /* --- ESTRUCTURA FLEXIBLE --- */
@@ -79,7 +90,8 @@
             width: 32%;
             background-color: #1e293b;
             color: #f1f5f9;
-            padding: 3rem 1.5rem 2rem 1.5rem; /* Padding original de la versión maestra */
+            /* Padding ajustado */
+            padding: 3rem 1.5rem 1rem 1.5rem;
             display: flex;
             flex-direction: column;
         }
@@ -88,8 +100,7 @@
         .main-content {
             width: 68%;
             background-color: #ffffff;
-            /* Padding 1.25rem arriba según tu última solicitud de posición de texto */
-            padding: 1.25rem 2.5rem 1rem 2.5rem;
+            padding: 3rem 2.5rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
@@ -99,9 +110,10 @@
         .bottom-bar {
             background-color: #1e293b; 
             color: #f1f5f9;
-            padding: 1.5rem 2.5rem 3rem 2.5rem;
-            /* AJUSTE REALIZADO: Se eliminó el borde superior para fusionar con el sidebar */
-            /* border-top: 1px solid #334155;  <-- ELIMINADO */
+            /* AJUSTE CLAVE 2: Reducción ligera del padding inferior (de 3rem a 2rem) 
+               para evitar que la última línea se corte, manteniendo visualmente el bloque grande */
+            padding: 1.5rem 2.5rem 2rem 2.5rem;
+            border-top: 1px solid #334155;
             flex-shrink: 0;
         }
 
@@ -109,11 +121,9 @@
             display: grid;
             grid-template-columns: 1.1fr 1fr 1fr;
             gap: 1.5rem;
-            /* Añadimos un borde sutil SOLO sobre el contenido del grid si quieres separar visualmente el contenido del footer del sidebar,
-               pero para una "L" limpia, mejor sin nada o solo separando la parte blanca. */
         }
 
-        /* --- ESTILOS DE TEXTO --- */
+        /* --- ESTILOS DE TEXTO (Web y Base) --- */
         h1 { font-size: 2.4rem; font-weight: 700; color: #1e293b; line-height: 1; margin-bottom: 0.25rem; }
         h2 { font-size: 1.2rem; font-weight: 600; color: #0369a1; margin-bottom: 0.5rem; }
         
@@ -130,7 +140,6 @@
         .main-content h3 { color: #0369a1; border-color: #bae6fd; margin-top: 1.5rem; }
         .main-content section:first-of-type h3 { margin-top: 0; }
         
-        /* Títulos en zona azul */
         .sidebar h3, .bottom-bar h3 { color: #38bdf8; border-color: #334155; margin-bottom: 0.5rem; }
 
         h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
@@ -145,12 +154,14 @@
         
         .main-content p, .main-content li { 
             color: #475569; 
-            text-align: justify !important;
+            text-align: justify; 
         }
 
+        /* Justificado en Sidebar */
         .sidebar p, .sidebar li { 
             color: #cbd5e1;
-            text-align: justify !important; 
+            text-align: justify; 
+            text-justify: inter-word;
         }
         
         .bottom-bar p, .bottom-bar li { color: #cbd5e1; }
@@ -161,14 +172,16 @@
         
         .sidebar li, .bottom-bar li { margin-bottom: 0.2rem; }
 
+        /* Estilos de perfil */
         #main-profile-text {
             margin-bottom: 1rem;
-            margin-top: 1rem !important; 
+            margin-top: 2em !important; /* Mantenemos el desplazamiento solicitado */
             line-height: 1.5; 
-            text-align: justify !important;
+            text-align: justify;
         }
-        #main-profile-title { margin-bottom: 0.5rem; }
+        #main-profile-title { margin-bottom: 0; }
 
+        /* Contenedor distribuido del sidebar */
         .sidebar-distribute {
             flex-grow: 1;
             display: flex;
@@ -178,6 +191,7 @@
             padding-bottom: 1rem;
         }
 
+        /* Foto */
         .profile-img {
             width: 200px; 
             height: 200px;
@@ -193,14 +207,14 @@
         .contact-item { display: flex; align-items: flex-start; margin-bottom: 0.5rem; }
 
         @media print {
-            body { font-size: 10px; } 
-            
-            .sidebar { padding: 3rem 1.5rem 2rem 1.5rem !important; }
-            .main-content { padding: 1.25rem 2.5rem 0 2.5rem !important; }
-            .bottom-bar { padding: 1.5rem 2.5rem 3rem 2.5rem !important; }
+            /* AJUSTE FINAL: Reducir ligeramente padding vertical interno para ganar espacio para las fuentes grandes */
+            .sidebar { padding: 3rem 1.5rem 1rem 1.5rem !important; }
+            .main-content { padding: 3rem 2.5rem 0.5rem 2.5rem !important; }
+            /* Footer padding inferior reducido para evitar corte */
+            .bottom-bar { padding: 1.5rem 2.5rem 2rem 2.5rem !important; }
             
             #main-profile-text {
-                margin-top: 1rem !important; 
+                margin-top: 2em !important; 
                 margin-bottom: 1rem !important;
             }
         }
@@ -296,7 +310,7 @@
 
                 <section>
                     <h3 id="main-profile-title">PROFESSIONAL PROFILE</h3>
-                    <p id="main-profile-text">
+                    <p id="main-profile-text" class="text-justify">
                         Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.
                     </p>
                 </section>
