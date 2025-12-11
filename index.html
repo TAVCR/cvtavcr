@@ -15,175 +15,227 @@
         /* Aplicar la fuente "Montserrat" a todo */
         body {
             font-family: 'Montserrat', sans-serif;
+            background-color: #525659; /* Fondo gris oscuro tipo visor PDF */
+            margin: 0;
+            padding: 2rem 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* --- CONTENEDOR TIPO HOJA A4 (VISTA EN PANTALLA) --- */
+        .page-a4 {
+            background: white;
+            width: 210mm;
+            min-height: 297mm; /* Altura exacta A4 */
+            /* box-shadow: 0 0 15px rgba(0,0,0,0.3); */
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         /* --- REGLAS CRÍTICAS DE IMPRESIÓN --- */
         @page {
-            margin: 0; /* Elimina encabezados y pies de página del navegador */
-            size: auto; 
+            margin: 0; 
+            size: A4; 
         }
 
         @media print {
             body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                margin: 0 !important;
-                padding: 0 !important;
                 background-color: white !important;
-                font-size: 10px !important; 
-                line-height: 1.2 !important; 
+                padding: 0 !important;
+                display: block !important;
+            }
+
+            .page-a4 {
+                width: 100% !important;
+                min-height: 100% !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
             }
 
             .no-print, button, .fixed {
                 display: none !important;
             }
-
-            /* ESTRUCTURA CLAVE: Tabla para igualar alturas */
-            .print-container {
-                display: table !important;
-                table-layout: fixed !important;
-                width: 100% !important;
-                height: 100% !important;
-                box-shadow: none !important;
-                margin: 0 !important;
-                border-radius: 0 !important;
-            }
             
-            .print-row {
-                display: table-row !important;
+            /* Ajuste de fuentes para impresión */
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
+        }
 
-            /* Sidebar: Celda de tabla */
-            .print-sidebar {
-                display: table-cell !important;
-                width: 30% !important;
-                vertical-align: top !important;
-                height: 100% !important; /* Se estira con el contenido vecino */
-                background-color: #1e293b !important;
-                padding: 1.5rem 1rem !important; 
-            }
+        /* --- ESTILOS DE ESTRUCTURA --- */
+        
+        /* Fila Superior (Sidebar + Main) */
+        .top-row {
+            display: flex;
+            flex: 1; /* Ocupa el espacio disponible hasta el footer */
+        }
 
-            /* Main: Celda de tabla */
-            .print-main {
-                display: table-cell !important;
-                width: 70% !important;
-                vertical-align: top !important;
-                height: 100% !important;
-                background-color: #ffffff !important;
-                padding: 1.5rem 2rem !important; 
-            }
+        /* Sidebar Azul */
+        .sidebar {
+            width: 32%; /* Un poco más ancha para mejor lectura */
+            background-color: #1e293b;
+            color: #f1f5f9;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Alineación superior */
+            gap: 2rem; /* Espacio entre bloques del sidebar */
+        }
 
-            /* Ajustes de Grid dentro de la columna principal */
-            .grid-footer {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important; 
-                gap: 1rem !important;
-                margin-top: 1rem !important;
-                padding-top: 1rem !important;
-                border-top: 1px solid #e2e8f0 !important;
-            }
+        /* Contenido Principal Blanco */
+        .main-content {
+            width: 68%;
+            background-color: #ffffff;
+            padding: 2.5rem 2.5rem 1rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+        }
 
-            /* --- AJUSTES DE ESPACIADO --- */
-            h1 { font-size: 1.8rem !important; margin-bottom: 0.2rem !important; line-height: 1 !important; }
-            h2 { font-size: 1rem !important; margin-bottom: 0.5rem !important; }
-            
-            h3 { 
-                font-size: 0.9rem !important; 
-                margin-bottom: 0.3rem !important; 
-                padding-bottom: 0.1rem !important; 
-                margin-top: 0.8rem !important; 
-                border-bottom-width: 1px !important; 
-                color: #0369a1 !important;
-            }
-            /* Excepción para títulos en sidebar oscuro */
-            .print-sidebar h3 { color: #0ea5e9 !important; }
-            
-            section:first-of-type h3, .print-sidebar > div:first-child h3 { margin-top: 0 !important; }
+        /* Sección Inferior Horizontal Azul */
+        .bottom-bar {
+            background-color: #1e293b; /* Mismo azul que sidebar */
+            color: #f1f5f9;
+            padding: 1.5rem 2.5rem;
+            border-top: 1px solid #334155;
+        }
 
-            h4 { 
-                font-size: 0.85rem !important; 
-                margin-top: 0.5rem !important; 
-                margin-bottom: 0.1rem !important; 
-                color: #334155 !important;
-            }
-            /* Texto claro en sidebar */
-            .print-sidebar li, .print-sidebar p, .print-sidebar h4 { color: #cbd5e1 !important; }
-            .print-sidebar h4 { color: #f1f5f9 !important; }
+        /* Grid del Footer */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr; /* Columna 1 ligeramente más ancha para software */
+            gap: 1.5rem;
+        }
 
-            p { font-size: 0.8rem !important; margin-bottom: 0.2rem !important; }
-            ul { margin-top: 0 !important; margin-bottom: 0.2rem !important; }
-            li { margin-bottom: 0.1rem !important; font-size: 0.8rem !important; color: #475569 !important; }
+        /* --- TIPOGRAFÍA Y DETALLES --- */
+        h1 { font-size: 2.2rem; font-weight: 700; color: #1e293b; line-height: 1; margin-bottom: 0.25rem; }
+        h2 { font-size: 1.1rem; font-weight: 600; color: #0369a1; margin-bottom: 0.5rem; }
+        
+        /* Títulos de Sección */
+        h3 { 
+            font-size: 1rem; 
+            font-weight: 700; 
+            letter-spacing: 0.05em; 
+            border-bottom-width: 2px; 
+            padding-bottom: 0.25rem; 
+            margin-bottom: 0.75rem; 
+            text-transform: uppercase;
+        }
+        
+        /* Colores de Títulos */
+        .main-content h3 { color: #0369a1; border-color: #bae6fd; margin-top: 1.5rem; }
+        .main-content section:first-of-type h3 { margin-top: 0; }
+        
+        .sidebar h3, .bottom-bar h3 { color: #38bdf8; border-color: #334155; margin-bottom: 0.5rem; }
 
-            .print-sidebar img {
-                width: 90px !important;
-                height: 90px !important;
-                margin-bottom: 0.5rem !important;
-            }
+        /* Subtítulos */
+        h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+        .main-content h4 { color: #334155; margin-top: 1rem; }
+        .sidebar h4, .bottom-bar h4 { color: #e2e8f0; margin-top: 0.5rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
 
-            .mb-8 { margin-bottom: 0.5rem !important; }
-            .mb-10 { margin-bottom: 0.5rem !important; }
+        p, li { font-size: 0.85rem; line-height: 1.4; }
+        .main-content p, .main-content li { color: #475569; }
+        .sidebar p, .sidebar li, .bottom-bar p, .bottom-bar li { color: #cbd5e1; }
 
-            p, h3, h4, li, img { page-break-inside: avoid; }
+        ul { padding-left: 0; list-style-position: inside; }
+        .main-content ul { list-style-type: disc; margin-top: 0.25rem; }
+        .sidebar ul, .bottom-bar ul { list-style-type: none; }
+        
+        /* Ajustes específicos de listas sidebar/footer */
+        .sidebar li, .bottom-bar li { margin-bottom: 0.2rem; }
+
+        /* Foto */
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 9999px;
+            border: 4px solid #38bdf8;
+            margin: 0 auto 1rem auto;
+            display: block;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Iconos */
+        .icon { width: 1rem; height: 1rem; color: #38bdf8; margin-right: 0.5rem; flex-shrink: 0; }
+        .contact-item { display: flex; align-items: flex-start; margin-bottom: 0.5rem; }
+
+        /* Ajustes para impresión compacta */
+        @media print {
+            body { font-size: 10px; }
+            h1 { font-size: 2rem; }
+            .sidebar { padding: 2rem 1rem; gap: 1.5rem; }
+            .main-content { padding: 2rem 2rem 0.5rem 2rem; }
+            .bottom-bar { padding: 1rem 2rem; }
+            .profile-img { width: 110px; height: 110px; }
         }
     </style>
 </head>
-<body class="bg-gray-100 p-8 print:p-0 print:bg-white relative">
+<body>
 
-    <!-- Contenedor de Botones -->
+    <!-- Botones Flotantes -->
     <div class="fixed bottom-8 right-8 flex flex-col gap-3 print:hidden z-50">
         <button onclick="toggleLanguage()" id="lang-btn" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer border-2 border-white/20 backdrop-blur-sm w-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" /></svg>
             <span id="lang-btn-text">Ver en Español</span>
         </button>
         <button onclick="window.print()" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer border-2 border-white/20 backdrop-blur-sm w-full">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
             <span>PDF</span>
         </button>
     </div>
 
-    <!-- CV Container -->
-    <div class="container mx-auto max-w-4xl bg-white shadow-xl rounded-lg overflow-hidden print-container">
+    <!-- PÁGINA A4 -->
+    <div class="page-a4 shadow-2xl">
         
-        <!-- ESTRUCTURA PRINCIPAL: FILA ÚNICA -->
-        <div class="print-row flex flex-col md:flex-row min-h-screen">
-
+        <!-- ZONA SUPERIOR: 2 COLUMNAS -->
+        <div class="top-row">
+            
             <!-- SIDEBAR -->
-            <div class="w-full md:w-1/3 bg-slate-800 text-slate-100 p-8 print-sidebar">
-                <div class="text-center mb-8">
-                    <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-sky-500 object-cover shadow-lg">
+            <aside class="sidebar">
+                <!-- Foto -->
+                <div>
+                    <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="profile-img">
                 </div>
 
                 <!-- Contacto -->
-                <div class="mb-8">
-                    <h3 id="sidebar-contact-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CONTACT</h3>
-                    <ul class="text-sm text-slate-200 space-y-3 font-medium">
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                            <span>+506 85020909</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                            <span class="break-all">dimension.interactiva@gmail.com</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.102 1.101m.758 4.899l-5.656 5.656" /></svg>
-                            <span class="break-all">tavcr.github.io/oferta-digital/</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657l-4.243-4.243a1 1 0 00-1.414 0l-4.243 4.243a1 1 0 001.414 1.414L12 13.414l2.243 2.243a1 1 0 001.414 0l2.243-2.243a1 1 0 000 1.414zM12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
-                            <span>San José, Costa Rica</span>
-                        </li>
-                    </ul>
+                <div>
+                    <h3 id="sidebar-contact-title">CONTACT</h3>
+                    <div class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                        <span>+506 85020909</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        <span class="break-all">dimension.interactiva@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.102 1.101m.758 4.899l-5.656 5.656" /></svg>
+                        <span class="break-all">tavcr.github.io/oferta-digital/</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657l-4.243-4.243a1 1 0 00-1.414 0l-4.243 4.243a1 1 0 001.414 1.414L12 13.414l2.243 2.243a1 1 0 001.414 0l2.243-2.243a1 1 0 000 1.414zM12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
+                        <span>San José, Costa Rica</span>
+                    </div>
                 </div>
 
-                <!-- Skills -->
-                <div class="mb-0">
-                    <h3 id="sidebar-skills-title" class="font-bold text-lg text-sky-500 border-b border-sky-500/50 pb-2 mb-4 uppercase tracking-wider">CORE SKILLS</h3>
-                    <ul id="sidebar-skills-list" class="text-sm text-slate-200 list-inside space-y-2 font-medium">
+                <!-- Academic (Movido de vuelta aquí para llenar espacio) -->
+                <div>
+                    <h3 id="sidebar-academic-title">ACADEMIC</h3>
+                    <div class="mb-2">
+                        <p id="sidebar-academic-degree" class="font-bold text-white">Master's in Industrial Engineering</p>
+                        <p id="sidebar-academic-uni" class="italic text-slate-400">Interamericana University of Costa Rica</p>
+                    </div>
+                </div>
+
+                <!-- Core Skills -->
+                <div>
+                    <h3 id="sidebar-skills-title">CORE SKILLS</h3>
+                    <ul id="sidebar-skills-list" class="space-y-1">
                         <li>End-to-End Video Production</li>
                         <li>Professional Audio Design</li>
                         <li>Post-Production (Resolve/Audition)</li>
@@ -193,37 +245,35 @@
                         <li>Process & Workflow Management</li>
                     </ul>
                 </div>
-            </div>
+            </aside>
 
             <!-- MAIN CONTENT -->
-            <div class="w-full md:w-2/3 p-10 print-main">
-
-                <header class="mb-10">
-                    <h1 class="font-bold text-5xl text-slate-800 mb-2">GUSTAVO GONZÁLEZ</h1>
-                    <h2 class="font-semibold text-2xl text-sky-700">
+            <main class="main-content">
+                <header class="mb-8">
+                    <h1 class="uppercase">GUSTAVO GONZÁLEZ</h1>
+                    <h2 class="uppercase">
                         <span id="main-role">SENIOR MULTIMEDIA PRODUCER</span>
-                        <span id="main-subrole" class="block text-xl font-medium text-slate-600">(Video • Photography • Graphic Design • Post-Production • Audio)</span>
+                        <span id="main-subrole" class="block text-lg font-medium text-slate-500 normal-case mt-1">(Video • Photography • Graphic Design • Post-Production • Audio)</span>
                     </h2>
                 </header>
 
-                <section class="mb-10">
-                    <h3 id="main-profile-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-4">PROFESSIONAL PROFILE</h3>
-                    <p id="main-profile-text" class="text-slate-700 leading-relaxed text-base font-medium">
+                <section>
+                    <h3 id="main-profile-title">PROFESSIONAL PROFILE</h3>
+                    <p id="main-profile-text" class="text-justify mb-6">
                         Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.
                     </p>
                 </section>
 
-                <section class="mb-4">
-                    <h3 id="main-exp-title" class="font-semibold text-2xl text-slate-800 border-b-2 border-sky-700 pb-2 mb-6">PROFESSIONAL EXPERIENCE</h3>
+                <section>
+                    <h3 id="main-exp-title">PROFESSIONAL EXPERIENCE</h3>
                     
-                    <!-- Job 1 -->
-                    <div class="mb-8">
-                        <h4 id="job1-title" class="font-semibold text-xl text-slate-800">DIGITAL CONTENT PRODUCER</h4>
-                        <p id="job1-meta" class="text-md font-semibold text-slate-600 italic">Freelance / Independent Consultant | 2018 – Present</p>
-                        <p id="job1-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
+                    <div class="mb-6">
+                        <h4 id="job1-title" class="text-lg">DIGITAL CONTENT PRODUCER</h4>
+                        <p id="job1-meta" class="text-sm font-semibold text-sky-700 italic mb-2">Freelance / Independent Consultant | 2018 – Present</p>
+                        <p id="job1-desc" class="mb-2">
                             Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).
                         </p>
-                        <ul id="job1-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
+                        <ul id="job1-list">
                             <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
                             <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
                             <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
@@ -231,101 +281,90 @@
                         </ul>
                     </div>
 
-                    <!-- Job 2 -->
-                    <div class="mb-0"> 
-                        <h4 id="job2-title" class="font-semibold text-xl text-slate-800">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
-                        <p id="job2-meta" class="text-md font-semibold text-slate-600 italic">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
-                        <p id="job2-desc" class="text-slate-700 mt-4 mb-3 leading-relaxed font-medium">
+                    <div> 
+                        <h4 id="job2-title" class="text-lg">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
+                        <p id="job2-meta" class="text-sm font-semibold text-sky-700 italic mb-2">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
+                        <p id="job2-desc" class="mb-2">
                             17+ years as lead audio designer/voice talent for top brands. Current station voice for AMOR FM.
                         </p>
-                        <ul id="job2-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
+                        <ul id="job2-list">
                             <li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
                             <li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
                             <li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>
                         </ul>
                     </div>
                 </section>
+            </main>
+        </div>
 
-                <!-- PARTE INFERIOR INTEGRADA (Para llenar espacio y empujar sidebar) -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 grid-footer">
-                    <!-- Columna 1: Software -->
-                    <div>
-                        <h3 id="footer-stack-title" class="font-bold text-lg text-sky-700 border-b border-sky-200 pb-1 mb-2 uppercase tracking-wider">TECHNICAL STACK</h3>
-                        <h4 id="footer-stack-primary" class="font-semibold text-slate-700 text-sm mt-1 mb-0 uppercase">Primary Software</h4>
-                        <ul id="footer-list-primary" class="text-sm text-slate-600 list-disc list-inside font-medium mb-1">
-                            <li>DaVinci Resolve Studio</li>
-                            <li>Adobe Audition</li>
-                            <li>Lightroom</li>
-                        </ul>
-                        <h4 id="footer-stack-secondary" class="font-semibold text-slate-700 text-sm mt-1 mb-0 uppercase">Secondary Software</h4>
-                        <ul id="footer-list-secondary" class="text-sm text-slate-600 list-disc list-inside font-medium">
-                            <li>Canva Pro, Photoshop</li>
-                            <li>ComfyUI / ElevenLabs</li>
-                        </ul>
-                    </div>
-
-                    <!-- Columna 2: Hardware -->
-                    <div>
-                        <h3 class="font-bold text-lg text-sky-700 border-b border-sky-200 pb-1 mb-2 uppercase tracking-wider opacity-0 md:opacity-100">HARDWARE</h3>
-                        <h4 id="footer-stack-cameras" class="font-semibold text-slate-700 text-sm mt-1 mb-0 uppercase">Cameras & Lenses</h4>
-                        <ul id="footer-list-cameras" class="text-sm text-slate-600 list-disc list-inside font-medium mb-1">
-                            <li>Canon R5 II | RF 24-105 L | RF 35mm</li>
-                        </ul>
-                        <h4 id="footer-stack-audio" class="font-semibold text-slate-700 text-sm mt-1 mb-0 uppercase">Audio Gear</h4>
-                        <ul id="footer-list-audio" class="text-sm text-slate-600 list-disc list-inside font-medium">
-                            <li>Neumann U87/M149 | Apollo Twin X</li>
-                        </ul>
-                    </div>
-
-                    <!-- Columna 3: Lighting & Academic -->
-                    <div>
-                        <h3 id="footer-academic-title-head" class="font-bold text-lg text-sky-700 border-b border-sky-200 pb-1 mb-2 uppercase tracking-wider opacity-0 md:opacity-100">INFO</h3>
-                        <h4 id="footer-stack-lighting" class="font-semibold text-slate-700 text-sm mt-1 mb-0 uppercase">Lighting & Grip</h4>
-                        <ul id="footer-list-lighting" class="text-sm text-slate-600 list-disc list-inside font-medium mb-2">
-                            <li>Godox V1/AD300 | LEDs | DJI Gimbal</li>
-                        </ul>
-                        <div class="mt-2 pt-2 border-t border-slate-100">
-                            <h3 id="footer-academic-title" class="font-bold text-md text-sky-700 uppercase tracking-wider mb-0">ACADEMIC</h3>
-                            <p id="footer-academic-degree" class="font-semibold text-sm text-slate-800">Master's in Industrial Engineering</p>
-                            <p id="footer-academic-uni" class="text-sm text-slate-500 italic font-medium">Interamericana University of Costa Rica</p>
-                        </div>
-                    </div>
+        <!-- ZONA INFERIOR: HORIZONTAL AZUL -->
+        <div class="bottom-bar">
+            <h3 id="footer-main-title" class="mb-4 border-b-0 text-xl">TECHNICAL ARSENAL</h3>
+            <div class="footer-grid">
+                
+                <!-- Col 1: Software -->
+                <div>
+                    <h4 id="footer-stack-primary">PRIMARY SOFTWARE</h4>
+                    <ul id="footer-list-primary">
+                        <li>DaVinci Resolve Studio</li>
+                        <li>Adobe Audition</li>
+                        <li>Lightroom</li>
+                    </ul>
+                    
+                    <h4 id="footer-stack-secondary">SECONDARY SOFTWARE</h4>
+                    <ul id="footer-list-secondary">
+                        <li>Canva Pro, Photoshop</li>
+                        <li>ComfyUI / ElevenLabs</li>
+                    </ul>
                 </div>
+
+                <!-- Col 2: Hardware -->
+                <div>
+                    <h4 id="footer-stack-cameras">CAMERAS & LENSES</h4>
+                    <ul id="footer-list-cameras">
+                        <li>Canon R5 II</li>
+                        <li>RF 24-105mm f/2.8 L</li>
+                        <li>RF 35mm f/1.8 STM</li>
+                    </ul>
+
+                    <h4 id="footer-stack-workstation">WORKSTATION</h4> <!-- ¡RECUPERADO! -->
+                    <ul id="footer-list-workstation">
+                        <li>PC: i9-13900KF, RTX 4090</li>
+                        <li>Samsung S25 Ultra</li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Audio & Lighting -->
+                <div>
+                    <h4 id="footer-stack-audio">AUDIO GEAR</h4>
+                    <ul id="footer-list-audio">
+                        <li>Neumann U87 / M149</li>
+                        <li>Universal Audio Apollo Twin X</li>
+                    </ul>
+
+                    <h4 id="footer-stack-lighting">LIGHTING & GRIP</h4> <!-- ¡RECUPERADO! -->
+                    <ul id="footer-list-lighting">
+                        <li>Godox V1 / AD300 Pro</li>
+                        <li>Pro Master LEDs</li>
+                        <li>DJI Osmo Mobile 6</li>
+                    </ul>
+                </div>
+
             </div>
         </div>
+
     </div>
 
-    <!-- Script de Traducción -->
     <script>
         const translations = {
             en: {
                 langBtnText: "Ver en Español",
                 sidebarContact: "CONTACT",
+                sidebarAcademic: "ACADEMIC",
+                sidebarAcademicDegree: "Master's in Industrial Engineering",
+                sidebarAcademicUni: "Interamericana University of Costa Rica",
                 sidebarSkills: "CORE SKILLS",
-                sidebarSkillsList: `
-                    <li>End-to-End Video Production</li>
-                    <li>Professional Audio Design</li>
-                    <li>Post-Production (Resolve/Audition)</li>
-                    <li>Professional Photography (RAW)</li>
-                    <li>On Screen Graphics</li>
-                    <li>Color Grading</li>
-                    <li>Process & Workflow Management</li>
-                `,
-                // Footer Translations
-                footerStack: "TECHNICAL STACK",
-                footerStackPrimary: "Primary Software",
-                footerStackSecondary: "Secondary Software",
-                footerListSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
-                footerStackCameras: "Cameras & Lenses",
-                footerListCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
-                footerStackAudio: "Audio Gear",
-                footerListAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
-                footerStackLighting: "Lighting & Grip",
-                footerListLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
-                
-                footerAcademic: "ACADEMIC",
-                footerAcademicDegree: "Master's in Industrial Engineering",
-                footerAcademicUni: "Interamericana University of Costa Rica",
+                sidebarSkillsList: `<li>End-to-End Video Production</li><li>Professional Audio Design</li><li>Post-Production (Resolve/Audition)</li><li>Professional Photography (RAW)</li><li>On Screen Graphics</li><li>Color Grading</li><li>Process & Workflow Management</li>`,
                 
                 mainRole: "SENIOR MULTIMEDIA PRODUCER",
                 mainSubrole: "(Video • Photography • Graphic Design • Post-Production • Audio)",
@@ -336,50 +375,29 @@
                 job1Title: "DIGITAL CONTENT PRODUCER",
                 job1Meta: "Freelance / Independent Consultant | 2018 – Present",
                 job1Desc: "Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).",
-                job1List: `
-                    <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
-                    <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
-                    <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
-                    <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>
-                `,
+                job1List: `<li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li><li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li><li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li><li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>`,
 
                 job2Title: "SENIOR AUDIO DESIGNER & VOICE ARTIST",
                 job2Meta: "Foundational Experience | Multiple Corporate Clients | 2001 – 2018",
                 job2Desc: "17+ years as lead audio designer/voice talent for top brands. Current station voice for AMOR FM.",
-                job2List: `
-                    <li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
-                    <li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
-                    <li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>
-                `
+                job2List: `<li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li><li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li><li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>`,
+
+                footerMainTitle: "TECHNICAL ARSENAL",
+                footerStackPrimary: "PRIMARY SOFTWARE",
+                footerStackSecondary: "SECONDARY SOFTWARE",
+                footerStackCameras: "CAMERAS & LENSES",
+                footerStackWorkstation: "WORKSTATION",
+                footerStackAudio: "AUDIO GEAR",
+                footerStackLighting: "LIGHTING & GRIP"
             },
             es: {
                 langBtnText: "View in English",
                 sidebarContact: "CONTACTO",
+                sidebarAcademic: "FORMACIÓN ACADÉMICA",
+                sidebarAcademicDegree: "Maestría en Ingeniería Industrial",
+                sidebarAcademicUni: "Universidad Interamericana de Costa Rica",
                 sidebarSkills: "HABILIDADES CLAVE",
-                sidebarSkillsList: `
-                    <li>Producción de Video Integral</li>
-                    <li>Diseño de Audio Profesional</li>
-                    <li>Postproducción (Resolve/Audition)</li>
-                    <li>Fotografía Profesional (RAW)</li>
-                    <li>On Screen Graphics</li>
-                    <li>Etalonaje (Color Grading)</li>
-                    <li>Gestión de Procesos y Flujos</li>
-                `,
-                // Footer Translations ES
-                footerStack: "STACK TÉCNICO",
-                footerStackPrimary: "Software Principal",
-                footerStackSecondary: "Software Secundario",
-                footerListSecondary: `<li>Canva Pro, Photoshop</li><li>ComfyUI / ElevenLabs</li>`,
-                footerStackCameras: "Cámaras y Lentes",
-                footerListCameras: `<li>Canon R5 II | RF 24-105 L | RF 35mm</li>`,
-                footerStackAudio: "Equipo de Audio",
-                footerListAudio: `<li>Neumann U87/M149 | Apollo Twin X</li>`,
-                footerStackLighting: "Iluminación y Soportes",
-                footerListLighting: `<li>Godox V1/AD300 | LEDs | DJI Gimbal</li>`,
-                
-                footerAcademic: "FORMACIÓN ACADÉMICA",
-                footerAcademicDegree: "Maestría en Ingeniería Industrial",
-                footerAcademicUni: "Universidad Interamericana de Costa Rica",
+                sidebarSkillsList: `<li>Producción de Video Integral</li><li>Diseño de Audio Profesional</li><li>Postproducción (Resolve/Audition)</li><li>Fotografía Profesional (RAW)</li><li>On Screen Graphics</li><li>Etalonaje (Color Grading)</li><li>Gestión de Procesos y Flujos</li>`,
                 
                 mainRole: "PRODUCTOR MULTIMEDIA SENIOR",
                 mainSubrole: "(Video • Fotografía • Diseño Gráfico • Postproducción • Audio)",
@@ -390,21 +408,20 @@
                 job1Title: "PRODUCTOR DE CONTENIDO DIGITAL",
                 job1Meta: "Freelance / Consultor Independiente | 2018 – Presente",
                 job1Desc: "Producción estratégica de contenido visual para clientes diversos (Redes Sociales/Campañas Digitales).",
-                job1List: `
-                    <li>Implementación de flujos de video profesional (C-Log 2) y foto (RAW) para elevar calidad de marca.</li>
-                    <li><strong>Audio y Gráficos:</strong> Uso experto de <strong>Audition</strong> y <strong>Canva</strong> para sonido 'broadcast' y gráficos de impacto.</li>
-                    <li>Diseño y animación de gráficos/plantillas usando <strong>DaVinci Resolve (Fusion)</strong>.</li>
-                    <li><strong>IA e Innovación:</strong> Uso experto de <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> para generación de imagen e <strong>IA para código</strong> (Apps básicas y optimización de flujos).</li>
-                `,
+                job1List: `<li>Implementación de flujos de video profesional (C-Log 2) y foto (RAW) para elevar calidad de marca.</li><li><strong>Audio y Gráficos:</strong> Uso experto de <strong>Audition</strong> y <strong>Canva</strong> para sonido 'broadcast' y gráficos de impacto.</li><li>Diseño y animación de gráficos/plantillas usando <strong>DaVinci Resolve (Fusion)</strong>.</li><li><strong>IA e Innovación:</strong> Uso experto de <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> para generación de imagen e <strong>IA para código</strong> (Apps básicas y optimización de flujos).</li>`,
 
                 job2Title: "DISEÑADOR DE AUDIO SENIOR Y LOCUTOR",
                 job2Meta: "Experiencia Fundacional | Múltiples Clientes Corporativos | 2001 – 2018",
                 job2Desc: "Más de 17 años como diseñador de audio/voz principal para grandes marcas. Voz actual de AMOR FM.",
-                job2List: `
-                    <li>Voz clave para: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
-                    <li>Dominio profundo de Adobe Audition, ahora aplicado a Fairlight en Resolve.</li>
-                    <li>Gestión completa del ciclo de audio: guión, casting, mezcla, entrega.</li>
-                `
+                job2List: `<li>Voz clave para: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li><li>Dominio profundo de Adobe Audition, ahora aplicado a Fairlight en Resolve.</li><li>Gestión completa del ciclo de audio: guión, casting, mezcla, entrega.</li>`,
+
+                footerMainTitle: "ARSENAL TÉCNICO",
+                footerStackPrimary: "SOFTWARE PRINCIPAL",
+                footerStackSecondary: "SOFTWARE SECUNDARIO",
+                footerStackCameras: "CÁMARAS Y LENTES",
+                footerStackWorkstation: "ESTACIÓN DE TRABAJO",
+                footerStackAudio: "EQUIPO DE AUDIO",
+                footerStackLighting: "ILUMINACIÓN Y SOPORTES"
             }
         };
 
@@ -417,38 +434,20 @@
             document.getElementById('html-tag').lang = currentLang;
             document.getElementById('lang-btn-text').innerText = t.langBtnText;
 
-            // Sidebar
+            // Update content
             document.getElementById('sidebar-contact-title').innerText = t.sidebarContact;
+            document.getElementById('sidebar-academic-title').innerText = t.sidebarAcademic;
+            document.getElementById('sidebar-academic-degree').innerText = t.sidebarAcademicDegree;
+            document.getElementById('sidebar-academic-uni').innerText = t.sidebarAcademicUni;
             document.getElementById('sidebar-skills-title').innerText = t.sidebarSkills;
             document.getElementById('sidebar-skills-list').innerHTML = t.sidebarSkillsList;
-            
-            // Footer Section Updates
-            document.getElementById('footer-stack-title').innerText = t.footerStack;
-            document.getElementById('footer-stack-primary').innerText = t.footerStackPrimary;
-            document.getElementById('footer-stack-secondary').innerText = t.footerStackSecondary;
-            document.getElementById('footer-list-secondary').innerHTML = t.footerListSecondary;
-            
-            document.getElementById('footer-stack-cameras').innerText = t.footerStackCameras;
-            document.getElementById('footer-list-cameras').innerHTML = t.footerListCameras;
-            
-            document.getElementById('footer-stack-audio').innerText = t.footerStackAudio;
-            document.getElementById('footer-list-audio').innerHTML = t.footerListAudio;
-            
-            document.getElementById('footer-stack-lighting').innerText = t.footerStackLighting;
-            document.getElementById('footer-list-lighting').innerHTML = t.footerListLighting;
-            
-            document.getElementById('footer-academic-title').innerText = t.footerAcademic;
-            document.getElementById('footer-academic-degree').innerText = t.footerAcademicDegree;
-            document.getElementById('footer-academic-uni').innerText = t.footerAcademicUni;
 
-
-            // Main
             document.getElementById('main-role').innerText = t.mainRole;
             document.getElementById('main-subrole').innerText = t.mainSubrole;
             document.getElementById('main-profile-title').innerText = t.mainProfileTitle;
             document.getElementById('main-profile-text').innerText = t.mainProfileText;
             document.getElementById('main-exp-title').innerText = t.mainExpTitle;
-            
+
             document.getElementById('job1-title').innerText = t.job1Title;
             document.getElementById('job1-meta').innerText = t.job1Meta;
             document.getElementById('job1-desc').innerText = t.job1Desc;
@@ -458,6 +457,14 @@
             document.getElementById('job2-meta').innerText = t.job2Meta;
             document.getElementById('job2-desc').innerText = t.job2Desc;
             document.getElementById('job2-list').innerHTML = t.job2List;
+
+            document.getElementById('footer-main-title').innerText = t.footerMainTitle;
+            document.getElementById('footer-stack-primary').innerText = t.footerStackPrimary;
+            document.getElementById('footer-stack-secondary').innerText = t.footerStackSecondary;
+            document.getElementById('footer-stack-cameras').innerText = t.footerStackCameras;
+            document.getElementById('footer-stack-workstation').innerText = t.footerStackWorkstation;
+            document.getElementById('footer-stack-audio').innerText = t.footerStackAudio;
+            document.getElementById('footer-stack-lighting').innerText = t.footerStackLighting;
         }
     </script>
 </body>
