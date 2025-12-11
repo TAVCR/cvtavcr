@@ -15,7 +15,7 @@
         /* Aplicar la fuente "Montserrat" a todo */
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #525659; /* Fondo gris oscuro tipo visor PDF */
+            background-color: #525659;
             margin: 0;
             padding: 2rem 0;
             display: flex;
@@ -23,19 +23,18 @@
             min-height: 100vh;
         }
 
-        /* --- CONTENEDOR TIPO HOJA A4 (VISTA EN PANTALLA) --- */
+        /* --- VISTA DE DOCUMENTO A4 --- */
         .page-a4 {
             background: white;
             width: 210mm;
-            height: 297mm; /* Altura exacta A4 fija */
+            min-height: 297mm; 
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* CRUCIAL: Empuja el footer al final */
         }
 
-        /* --- REGLAS CRÍTICAS DE IMPRESIÓN --- */
+        /* --- REGLAS DE IMPRESIÓN --- */
         @page {
             margin: 0; 
             size: A4; 
@@ -50,14 +49,11 @@
 
             .page-a4 {
                 width: 100% !important;
-                height: 297mm !important; /* Forzar altura completa en impresión */
+                height: 297mm !important; 
                 box-shadow: none !important;
                 margin: 0 !important;
-                border-radius: 0 !important;
-                /* Asegurar que flex funcione en impresión para distribuir espacio */
                 display: flex !important;
                 flex-direction: column !important;
-                justify-content: space-between !important;
             }
 
             .no-print, button, .fixed {
@@ -70,12 +66,12 @@
             }
         }
 
-        /* --- ESTILOS DE ESTRUCTURA --- */
+        /* --- ESTRUCTURA FLEXIBLE --- */
         
-        /* Fila Superior (Sidebar + Main) */
         .top-row {
             display: flex;
-            flex-grow: 1; /* Crece para ocupar todo el espacio disponible */
+            flex-grow: 1; 
+            align-items: stretch;
         }
 
         /* Sidebar Azul */
@@ -83,101 +79,143 @@
             width: 32%;
             background-color: #1e293b;
             color: #f1f5f9;
-            padding: 3rem 1.5rem; /* Más padding vertical */
+            padding: 2.5rem 1.5rem;
             display: flex;
             flex-direction: column;
-            /* Distribución para llenar el hueco rojo */
-            justify-content: space-between; 
-            gap: 1rem;
-        }
-        
-        .sidebar-content-group {
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem; /* Espacio entre bloques internos */
         }
 
         /* Contenido Principal Blanco */
         .main-content {
             width: 68%;
             background-color: #ffffff;
-            padding: 3rem 2.5rem 1rem 2.5rem; /* Más padding superior */
+            /* AJUSTE: Padding aumentado a 3rem para BAJAR el bloque de texto */
+            padding: 3rem 2.5rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            gap: 1.5rem; /* Espacio entre secciones principales */
         }
 
         /* Sección Inferior Horizontal Azul */
         .bottom-bar {
             background-color: #1e293b; 
             color: #f1f5f9;
-            padding: 1.8rem 2.5rem 2rem 2.5rem; /* Padding generoso */
+            padding: 1.5rem 2.5rem 2rem 2.5rem;
             border-top: 1px solid #334155;
-            flex-shrink: 0; /* No encoger */
+            flex-shrink: 0;
         }
 
-        /* Grid del Footer */
         .footer-grid {
             display: grid;
             grid-template-columns: 1.1fr 1fr 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
-        /* --- TIPOGRAFÍA Y DETALLES (Ajustados para llenar) --- */
+        /* --- ESTILOS DE TEXTO --- */
         h1 { font-size: 2.4rem; font-weight: 700; color: #1e293b; line-height: 1; margin-bottom: 0.25rem; }
         h2 { font-size: 1.2rem; font-weight: 600; color: #0369a1; margin-bottom: 0.5rem; }
         
-        /* Títulos de Sección */
         h3 { 
-            font-size: 1.05rem; 
+            font-size: 1rem; 
             font-weight: 700; 
             letter-spacing: 0.05em; 
             border-bottom-width: 2px; 
-            padding-bottom: 0.3rem; 
-            margin-bottom: 0.8rem; 
+            padding-bottom: 0.25rem; 
+            margin-bottom: 0.75rem; 
             text-transform: uppercase;
         }
         
         .main-content h3 { color: #0369a1; border-color: #bae6fd; }
-        .sidebar h3, .bottom-bar h3 { color: #38bdf8; border-color: #334155; margin-bottom: 0.6rem; }
+        
+        /* Eliminar margen superior del primer título para que respete el padding del contenedor */
+        .main-content section:first-of-type h3 { margin-top: 0; }
+        
+        .sidebar h3, .bottom-bar h3 { color: #38bdf8; border-color: #334155; margin-bottom: 0.5rem; }
 
-        /* Subtítulos */
-        h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
-        .main-content h4 { color: #334155; margin-top: 0.5rem; }
-        .sidebar h4, .bottom-bar h4 { color: #e2e8f0; margin-top: 0.5rem; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
+        h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
+        .main-content h4 { color: #334155; margin-top: 1rem; }
+        .sidebar h4, .bottom-bar h4 { color: #e2e8f0; margin-top: 0.5rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
 
-        p, li { font-size: 0.9rem; line-height: 1.5; } /* Fuente un poco más grande */
-        .main-content p, .main-content li { color: #475569; }
+        /* COMPRESIÓN DE TEXTO */
+        p, li { 
+            font-size: 0.85rem; 
+            line-height: 1.35; /* Interlineado comprimido */
+        }
+        
+        .main-content p, .main-content li { 
+            color: #475569; 
+            text-align: justify; /* Justificado */
+        }
         .sidebar p, .sidebar li, .bottom-bar p, .bottom-bar li { color: #cbd5e1; }
 
         ul { padding-left: 0; list-style-position: inside; }
-        .main-content ul { list-style-type: disc; margin-top: 0.5rem; }
+        .main-content ul { list-style-type: disc; margin-top: 0.25rem; }
         .sidebar ul, .bottom-bar ul { list-style-type: none; }
         
-        .sidebar li, .bottom-bar li { margin-bottom: 0.3rem; }
+        .sidebar li, .bottom-bar li { margin-bottom: 0.2rem; }
+
+        /* --- AJUSTE DE CENTRADO DEL PERFIL PROFESIONAL --- */
+        
+        /* 1. Margen inferior del título aumentado para dar aire arriba del texto */
+        #main-profile-title { 
+            margin-bottom: 1.25rem !important; 
+            margin-top: 1.5rem !important; /* Separación del header */
+        }
+
+        /* 2. Márgenes del texto eliminados/ajustados */
+        #main-profile-text {
+            margin-bottom: 0 !important; 
+            margin-top: 0 !important;
+            line-height: 1.45; 
+            text-align: justify;
+        }
+
+        /* 3. Margen superior del siguiente título (Experiencia) ajustado para igualar el espacio */
+        #main-exp-title {
+            margin-top: 1.25rem !important; /* Igual que el margin-bottom del título de perfil */
+        }
+
+        /* Contenedor distribuido del sidebar */
+        .sidebar-distribute {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
 
         /* Foto */
         .profile-img {
-            width: 150px; /* Un poco más grande */
-            height: 150px;
+            width: 140px;
+            height: 140px;
             object-fit: cover;
             border-radius: 9999px;
             border: 4px solid #38bdf8;
-            margin: 0 auto 1.5rem auto;
+            margin: 0 auto 0 auto;
             display: block;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
-        /* Iconos */
-        .icon { width: 1.1rem; height: 1.1rem; color: #38bdf8; margin-right: 0.6rem; flex-shrink: 0; margin-top: 2px; }
-        .contact-item { display: flex; align-items: flex-start; margin-bottom: 0.7rem; }
+        .icon { width: 1rem; height: 1rem; color: #38bdf8; margin-right: 0.5rem; flex-shrink: 0; margin-top: 2px; }
+        .contact-item { display: flex; align-items: flex-start; margin-bottom: 0.5rem; }
 
-        /* Ajustes específicos para impresión */
         @media print {
-            body { font-size: 11px; } /* Base font size aumentada para llenar */
-            .page-a4 { height: 297mm; }
+            body { font-size: 10px; } 
+            .sidebar { padding: 2rem 1.5rem; }
+            
+            /* Mantener padding aumentado en impresión */
+            .main-content { padding: 3rem 2.5rem 0 2.5rem; }
+            .bottom-bar { padding: 1.5rem 2.5rem; }
+            
+            /* Asegurar espaciado en impresión */
+            #main-profile-title { margin-bottom: 1.25rem !important; }
+            #main-exp-title { margin-top: 1.25rem !important; }
+            
+            p, li { line-height: 1.3 !important; margin-bottom: 0.3rem; }
+            .mb-2 { margin-bottom: 0.3rem !important; }
+            .mb-6 { margin-bottom: 1rem !important; }
         }
+
     </style>
 </head>
 <body>
@@ -202,12 +240,15 @@
             
             <!-- SIDEBAR -->
             <aside class="sidebar">
-                <!-- Grupo Superior: Foto y Contacto -->
-                <div class="sidebar-content-group">
-                    <div>
-                        <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="profile-img">
-                    </div>
+                <!-- Foto (Fija arriba) -->
+                <div style="flex-shrink: 0;">
+                    <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="profile-img">
+                </div>
 
+                <!-- Contenedor Distribuido -->
+                <div class="sidebar-distribute">
+                    
+                    <!-- Contacto -->
                     <div>
                         <h3 id="sidebar-contact-title">CONTACT</h3>
                         <div class="contact-item">
@@ -227,18 +268,17 @@
                             <span>San José, Costa Rica</span>
                         </div>
                     </div>
-                </div>
 
-                <!-- Grupo Inferior: Academic y Skills -->
-                <div class="sidebar-content-group">
+                    <!-- Academic -->
                     <div>
                         <h3 id="sidebar-academic-title">ACADEMIC</h3>
                         <div class="mb-2">
-                            <p id="sidebar-academic-degree" class="font-bold text-white text-lg leading-tight mb-1">Master's in Industrial Engineering</p>
+                            <p id="sidebar-academic-degree" class="font-bold text-white">Master's in Industrial Engineering</p>
                             <p id="sidebar-academic-uni" class="italic text-slate-400">Interamericana University of Costa Rica</p>
                         </div>
                     </div>
 
+                    <!-- Skills -->
                     <div>
                         <h3 id="sidebar-skills-title">CORE SKILLS</h3>
                         <ul id="sidebar-skills-list" class="space-y-2">
@@ -251,6 +291,7 @@
                             <li>Process & Workflow Management</li>
                         </ul>
                     </div>
+
                 </div>
             </aside>
 
@@ -266,7 +307,7 @@
 
                 <section>
                     <h3 id="main-profile-title">PROFESSIONAL PROFILE</h3>
-                    <p id="main-profile-text" class="text-justify">
+                    <p id="main-profile-text">
                         Senior Multimedia Producer with 25+ years experience. I integrate professional video, photography, graphic design, and high-end audio engineering. Combining artistic vision with the technical precision of an Industrial Engineer, I deliver high-impact digital assets from concept to final export.
                     </p>
                 </section>
@@ -277,10 +318,10 @@
                     <div class="mb-6">
                         <h4 id="job1-title" class="text-lg">DIGITAL CONTENT PRODUCER</h4>
                         <p id="job1-meta" class="text-sm font-semibold text-sky-700 italic mb-2">Freelance / Independent Consultant | 2018 – Present</p>
-                        <p id="job1-desc" class="mb-2">
+                        <p id="job1-desc" class="mb-2 text-justify">
                             Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).
                         </p>
-                        <ul id="job1-list">
+                        <ul id="job1-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
                             <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
                             <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
                             <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
@@ -291,10 +332,10 @@
                     <div> 
                         <h4 id="job2-title" class="text-lg">SENIOR AUDIO DESIGNER & VOICE ARTIST</h4>
                         <p id="job2-meta" class="text-sm font-semibold text-sky-700 italic mb-2">Foundational Experience | Multiple Corporate Clients | 2001 – 2018</p>
-                        <p id="job2-desc" class="mb-2">
+                        <p id="job2-desc" class="mb-2 text-justify">
                             17+ years as lead audio designer/voice talent for top brands. Current station voice for AMOR FM.
                         </p>
-                        <ul id="job2-list">
+                        <ul id="job2-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
                             <li>Key voice for: Imperial, Pizza Hut, Promerica, Subway, Pepsi, Colgate, Suavitel, etc.</li>
                             <li>Deep mastery of Adobe Audition, now applied to the Fairlight suite in Resolve.</li>
                             <li>Managed full audio cycle: scriptwriting, casting, mix, delivery.</li>
@@ -441,7 +482,7 @@
             document.getElementById('html-tag').lang = currentLang;
             document.getElementById('lang-btn-text').innerText = t.langBtnText;
 
-            // Update content
+            // Sidebar
             document.getElementById('sidebar-contact-title').innerText = t.sidebarContact;
             document.getElementById('sidebar-academic-title').innerText = t.sidebarAcademic;
             document.getElementById('sidebar-academic-degree').innerText = t.sidebarAcademicDegree;
