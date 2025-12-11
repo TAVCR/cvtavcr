@@ -12,9 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Variable CSS para la escala de impresión */
+        /* Variables CSS dinámicas */
         :root {
             --print-scale: 1;
+            --print-height: 297mm; /* Altura base A4 */
         }
 
         /* Aplicar la fuente "Montserrat" a todo */
@@ -32,11 +33,13 @@
         .page-a4 {
             background: white;
             width: 210mm;
-            min-height: 297mm; 
+            /* Usamos la variable de altura para previsualizar la compensación */
+            height: var(--print-height); 
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            transition: height 0.1s ease; /* Suavizar el cambio de tamaño */
         }
 
         /* --- REGLAS DE IMPRESIÓN --- */
@@ -50,9 +53,10 @@
                 background-color: white !important;
                 padding: 0 !important;
                 display: block !important;
-                /* AQUI SE APLICA LA MAGIA DE LA ESCALA MANUAL */
+                
+                /* ESCALA Y COMPENSACIÓN */
                 zoom: var(--print-scale); 
-                /* Soporte para Firefox (aunque zoom suele bastar en Chrome/Edge) */
+                /* Firefox */
                 -moz-transform: scale(var(--print-scale));
                 -moz-transform-origin: top left;
                 width: 100% !important;
@@ -60,14 +64,15 @@
 
             .page-a4 {
                 width: 100% !important;
-                height: 297mm !important; 
+                /* Aquí forzamos la altura compensada para llenar la hoja física */
+                height: var(--print-height) !important; 
                 box-shadow: none !important;
                 margin: 0 !important;
                 display: flex !important;
                 flex-direction: column !important;
             }
 
-            /* Ocultar interfaz de usuario en impresión */
+            /* Ocultar interfaz */
             .no-print, button, .fixed, #print-controls {
                 display: none !important;
             }
@@ -82,8 +87,8 @@
         
         .top-row {
             display: flex;
-            flex-grow: 1; 
-            align-items: stretch;
+            flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
+            align-items: stretch; /* Estira las columnas al máximo */
         }
 
         /* Sidebar Azul */
@@ -100,7 +105,6 @@
         .main-content {
             width: 68%;
             background-color: #ffffff;
-            /* AJUSTE REALIZADO: Aumentado a 3rem para bajar el bloque de texto */
             padding: 3rem 2.5rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
@@ -111,9 +115,10 @@
         .bottom-bar {
             background-color: #1e293b; 
             color: #f1f5f9;
-            padding: 1.5rem 2.5rem 3rem 2.5rem;
-            border-top: none; /* Sin borde para fusión perfecta */
-            flex-shrink: 0;
+            /* Margen inferior 3rem para simetría */
+            padding: 1.5rem 2.5rem 3rem 2.5rem; 
+            border-top: none; 
+            flex-shrink: 0; /* Evita que se encoja si falta espacio */
         }
 
         .footer-grid {
@@ -145,19 +150,17 @@
         .main-content h4 { color: #334155; margin-top: 1rem; }
         .sidebar h4, .bottom-bar h4 { color: #e2e8f0; margin-top: 0.5rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
 
-        /* COMPRESIÓN DE TEXTO */
+        /* COMPRESIÓN Y JUSTIFICACIÓN */
         p, li { 
             font-size: 0.85rem; 
             line-height: 1.35; 
         }
         
-        /* Justificado Columna Derecha (Blanca) */
         .main-content p, .main-content li { 
             color: #475569; 
             text-align: justify !important;
         }
 
-        /* Justificado Columna Izquierda (Azul) */
         .sidebar p, .sidebar li { 
             color: #cbd5e1;
             text-align: justify !important; 
@@ -174,13 +177,12 @@
         /* Estilos de perfil */
         #main-profile-text {
             margin-bottom: 1rem;
-            margin-top: 1rem !important; 
+            margin-top: 2em !important; 
             line-height: 1.5; 
             text-align: justify !important;
         }
-        #main-profile-title { margin-bottom: 0.5rem; }
+        #main-profile-title { margin-bottom: 0; }
 
-        /* Contenedor distribuido del sidebar */
         .sidebar-distribute {
             flex-grow: 1;
             display: flex;
@@ -190,7 +192,6 @@
             padding-bottom: 1rem;
         }
 
-        /* Foto */
         .profile-img {
             width: 200px; 
             height: 200px;
@@ -205,14 +206,15 @@
         .icon { width: 1rem; height: 1rem; color: #38bdf8; margin-right: 0.5rem; flex-shrink: 0; margin-top: 2px; }
         .contact-item { display: flex; align-items: flex-start; margin-bottom: 0.5rem; }
 
+        .contact-text { word-break: break-all; }
+
         @media print {
             .sidebar { padding: 3rem 1.5rem 2rem 1.5rem !important; }
-            /* AJUSTE REALIZADO TAMBIÉN EN PRINT: Aumentado a 3rem */
             .main-content { padding: 3rem 2.5rem 0 2.5rem !important; }
             .bottom-bar { padding: 1.5rem 2.5rem 3rem 2.5rem !important; }
             
             #main-profile-text {
-                margin-top: 1rem !important; 
+                margin-top: 2em !important; 
                 margin-bottom: 1rem !important;
             }
         }
@@ -228,11 +230,11 @@
             <span id="scale-value" class="font-mono text-sky-400 font-bold text-sm">1.00</span>
         </div>
         
-        <input type="range" id="print-scale-slider" min="0.5" max="1.1" step="0.01" value="1.00" 
+        <input type="range" id="print-scale-slider" min="0.80" max="1.05" step="0.01" value="1.00" 
                class="w-full h-2 bg-slate-600 rounded-lg appearance-none cursor-pointer accent-sky-500 hover:accent-sky-400">
                
         <p class="text-[10px] text-slate-400 mt-1 leading-tight text-justify">
-            <span class="text-sky-400 font-bold">Instrucciones:</span> Si el PDF corta contenido, reduce este valor (ej: 0.95) y vuelve a pulsar "PDF". La vista web no cambiará, solo la impresión.
+            <span class="text-sky-400 font-bold">Instrucciones:</span> Ajusta el deslizador hasta que todo quepa. El sistema rellenará automáticamente el fondo azul inferior para cubrir la página A4 completa.
         </p>
     </div>
 
@@ -256,7 +258,7 @@
             
             <!-- SIDEBAR -->
             <aside class="sidebar">
-                <!-- Foto (Fija arriba) -->
+                <!-- Foto -->
                 <div style="flex-shrink: 0;">
                     <img src="https://i.postimg.cc/c4wyz1QF/FOTO-PARA-CV-GUSTAVO.png" alt="Gustavo González" class="profile-img">
                 </div>
@@ -340,7 +342,7 @@
                         <ul id="job1-list" class="list-disc list-inside text-slate-700 space-y-2 leading-relaxed font-medium">
                             <li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li>
                             <li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li>
-                            <li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li>
+                            <li>Animate graphics & templates using <strong>DaVinci Resolve</strong>.</li>
                             <li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>
                         </ul>
                     </div>
@@ -439,7 +441,7 @@
                 job1Title: "DIGITAL CONTENT PRODUCER",
                 job1Meta: "Freelance / Independent Consultant | 2018 – Present",
                 job1Desc: "Strategic production of visual content for diverse clients (Social Media/Digital Campaigns).",
-                job1List: `<li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li><li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li><li>Design/animate graphics & templates using <strong>DaVinci Resolve (Fusion)</strong>.</li><li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>`,
+                job1List: `<li>Implement professional video (C-Log 2) & photo (RAW) workflows to elevate brand quality.</li><li><strong>Audio & Graphics:</strong> Expert use of <strong>Adobe Audition</strong> & <strong>Canva</strong> for broadcast-quality sound & impact graphics.</li><li>Animate graphics & templates using <strong>DaVinci Resolve</strong>.</li><li><strong>AI & Innovation:</strong> Expert use of <strong>ComfyUI (Flux, Nanobanana, Reve)</strong> for image gen & <strong>AI-assisted coding</strong> for basic Apps & workflow optimization.</li>`,
 
                 job2Title: "SENIOR AUDIO DESIGNER & VOICE ARTIST",
                 job2Meta: "Foundational Experience | Multiple Corporate Clients | 2001 – 2018",
@@ -534,14 +536,20 @@
             document.getElementById('footer-stack-lighting').innerText = t.footerStackLighting;
         }
 
-        // CONTROL DE ESCALA DINÁMICO
+        // CONTROL DE ESCALA Y COMPENSACIÓN DE ALTURA
         const slider = document.getElementById('print-scale-slider');
         const output = document.getElementById('scale-value');
         const root = document.documentElement;
 
         slider.oninput = function() {
-            output.innerHTML = parseFloat(this.value).toFixed(2);
-            root.style.setProperty('--print-scale', this.value);
+            const scale = parseFloat(this.value);
+            output.innerHTML = scale.toFixed(2);
+            root.style.setProperty('--print-scale', scale);
+            
+            // Compensación automática de altura:
+            // Si la escala es 0.94, la página debe ser 297mm / 0.94 para ocupar el mismo espacio físico en papel.
+            const adjustedHeight = 297 / scale;
+            root.style.setProperty('--print-height', adjustedHeight + 'mm');
         }
     </script>
 </body>
