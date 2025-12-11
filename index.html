@@ -64,6 +64,17 @@
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
+
+            /* AJUSTES DE IMPRESIÓN ESPECÍFICOS PARA FUENTES Y PADDING */
+            h1 { font-size: 24pt !important; margin-bottom: 0.2rem !important; }
+            h2 { font-size: 12pt !important; margin-bottom: 1rem !important; }
+            h3 { font-size: 10pt !important; }
+            
+            .sidebar { padding: 3rem 1.5rem 1rem 1.5rem !important; }
+            .main-content { padding: 1.25rem 2.5rem 0 2.5rem !important; }
+            .bottom-bar { padding: 1rem 2.5rem 1.5rem 2.5rem !important; }
+            
+            #main-profile-text { margin-top: 1rem !important; margin-bottom: 1rem !important; }
         }
 
         /* --- ESTRUCTURA FLEXIBLE --- */
@@ -88,7 +99,6 @@
         .main-content {
             width: 68%;
             background-color: #ffffff;
-            /* Padding original de la maestra */
             padding: 1.25rem 2.5rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
@@ -100,7 +110,8 @@
             background-color: #1e293b; 
             color: #f1f5f9;
             padding: 1.5rem 2.5rem 3rem 2.5rem;
-            border-top: 1px solid #334155;
+            /* AJUSTE REALIZADO: Eliminado el borde superior para lograr la L continua */
+            border-top: none; 
             flex-shrink: 0;
         }
 
