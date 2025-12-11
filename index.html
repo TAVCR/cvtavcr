@@ -79,7 +79,7 @@
             width: 32%;
             background-color: #1e293b;
             color: #f1f5f9;
-            padding: 2.5rem 1.5rem;
+            padding: 3rem 1.5rem 2rem 1.5rem; /* Padding original de la versión maestra */
             display: flex;
             flex-direction: column;
         }
@@ -88,19 +88,20 @@
         .main-content {
             width: 68%;
             background-color: #ffffff;
-            /* AJUSTE: Padding aumentado a 3rem para BAJAR el bloque de texto */
-            padding: 3rem 2.5rem 1rem 2.5rem;
+            /* Padding 1.25rem arriba según tu última solicitud de posición de texto */
+            padding: 1.25rem 2.5rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: flex-start; 
         }
 
         /* Sección Inferior Horizontal Azul */
         .bottom-bar {
             background-color: #1e293b; 
             color: #f1f5f9;
-            padding: 1.5rem 2.5rem 2rem 2.5rem;
-            border-top: 1px solid #334155;
+            padding: 1.5rem 2.5rem 3rem 2.5rem;
+            /* AJUSTE REALIZADO: Se eliminó el borde superior para fusionar con el sidebar */
+            /* border-top: 1px solid #334155;  <-- ELIMINADO */
             flex-shrink: 0;
         }
 
@@ -108,6 +109,8 @@
             display: grid;
             grid-template-columns: 1.1fr 1fr 1fr;
             gap: 1.5rem;
+            /* Añadimos un borde sutil SOLO sobre el contenido del grid si quieres separar visualmente el contenido del footer del sidebar,
+               pero para una "L" limpia, mejor sin nada o solo separando la parte blanca. */
         }
 
         /* --- ESTILOS DE TEXTO --- */
@@ -124,11 +127,10 @@
             text-transform: uppercase;
         }
         
-        .main-content h3 { color: #0369a1; border-color: #bae6fd; }
-        
-        /* Eliminar margen superior del primer título para que respete el padding del contenedor */
+        .main-content h3 { color: #0369a1; border-color: #bae6fd; margin-top: 1.5rem; }
         .main-content section:first-of-type h3 { margin-top: 0; }
         
+        /* Títulos en zona azul */
         .sidebar h3, .bottom-bar h3 { color: #38bdf8; border-color: #334155; margin-bottom: 0.5rem; }
 
         h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.15rem; }
@@ -138,14 +140,20 @@
         /* COMPRESIÓN DE TEXTO */
         p, li { 
             font-size: 0.85rem; 
-            line-height: 1.35; /* Interlineado comprimido */
+            line-height: 1.35; 
         }
         
         .main-content p, .main-content li { 
             color: #475569; 
-            text-align: justify; /* Justificado */
+            text-align: justify !important;
         }
-        .sidebar p, .sidebar li, .bottom-bar p, .bottom-bar li { color: #cbd5e1; }
+
+        .sidebar p, .sidebar li { 
+            color: #cbd5e1;
+            text-align: justify !important; 
+        }
+        
+        .bottom-bar p, .bottom-bar li { color: #cbd5e1; }
 
         ul { padding-left: 0; list-style-position: inside; }
         .main-content ul { list-style-type: disc; margin-top: 0.25rem; }
@@ -153,28 +161,14 @@
         
         .sidebar li, .bottom-bar li { margin-bottom: 0.2rem; }
 
-        /* --- AJUSTE DE CENTRADO DEL PERFIL PROFESIONAL --- */
-        
-        /* 1. Margen inferior del título aumentado para dar aire arriba del texto */
-        #main-profile-title { 
-            margin-bottom: 1.25rem !important; 
-            margin-top: 1.5rem !important; /* Separación del header */
-        }
-
-        /* 2. Márgenes del texto eliminados/ajustados */
         #main-profile-text {
-            margin-bottom: 0 !important; 
-            margin-top: 0 !important;
-            line-height: 1.45; 
-            text-align: justify;
+            margin-bottom: 1rem;
+            margin-top: 1rem !important; 
+            line-height: 1.5; 
+            text-align: justify !important;
         }
+        #main-profile-title { margin-bottom: 0.5rem; }
 
-        /* 3. Margen superior del siguiente título (Experiencia) ajustado para igualar el espacio */
-        #main-exp-title {
-            margin-top: 1.25rem !important; /* Igual que el margin-bottom del título de perfil */
-        }
-
-        /* Contenedor distribuido del sidebar */
         .sidebar-distribute {
             flex-grow: 1;
             display: flex;
@@ -184,10 +178,9 @@
             padding-bottom: 1rem;
         }
 
-        /* Foto */
         .profile-img {
-            width: 140px;
-            height: 140px;
+            width: 200px; 
+            height: 200px;
             object-fit: cover;
             border-radius: 9999px;
             border: 4px solid #38bdf8;
@@ -201,19 +194,15 @@
 
         @media print {
             body { font-size: 10px; } 
-            .sidebar { padding: 2rem 1.5rem; }
             
-            /* Mantener padding aumentado en impresión */
-            .main-content { padding: 3rem 2.5rem 0 2.5rem; }
-            .bottom-bar { padding: 1.5rem 2.5rem; }
+            .sidebar { padding: 3rem 1.5rem 2rem 1.5rem !important; }
+            .main-content { padding: 1.25rem 2.5rem 0 2.5rem !important; }
+            .bottom-bar { padding: 1.5rem 2.5rem 3rem 2.5rem !important; }
             
-            /* Asegurar espaciado en impresión */
-            #main-profile-title { margin-bottom: 1.25rem !important; }
-            #main-exp-title { margin-top: 1.25rem !important; }
-            
-            p, li { line-height: 1.3 !important; margin-bottom: 0.3rem; }
-            .mb-2 { margin-bottom: 0.3rem !important; }
-            .mb-6 { margin-bottom: 1rem !important; }
+            #main-profile-text {
+                margin-top: 1rem !important; 
+                margin-bottom: 1rem !important;
+            }
         }
 
     </style>
@@ -253,19 +242,19 @@
                         <h3 id="sidebar-contact-title">CONTACT</h3>
                         <div class="contact-item">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                            <span>+506 85020909</span>
+                            <span class="contact-text">+506 85020909</span>
                         </div>
                         <div class="contact-item">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                            <span class="break-all">dimension.interactiva@gmail.com</span>
+                            <span class="break-all contact-text">dimension.interactiva@gmail.com</span>
                         </div>
                         <div class="contact-item">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.102 1.101m.758 4.899l-5.656 5.656" /></svg>
-                            <span class="break-all">tavcr.github.io/oferta-digital/</span>
+                            <span class="break-all contact-text">tavcr.github.io/oferta-digital/</span>
                         </div>
                         <div class="contact-item">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657l-4.243-4.243a1 1 0 00-1.414 0l-4.243 4.243a1 1 0 001.414 1.414L12 13.414l2.243 2.243a1 1 0 001.414 0l2.243-2.243a1 1 0 000 1.414zM12 21a9 9 0 100-18 9 9 0 000 18z" /></svg>
-                            <span>San José, Costa Rica</span>
+                            <span class="contact-text">San José, Costa Rica</span>
                         </div>
                     </div>
 
@@ -297,7 +286,7 @@
 
             <!-- MAIN CONTENT -->
             <main class="main-content">
-                <header>
+                <header class="mb-8">
                     <h1 class="uppercase">GUSTAVO GONZÁLEZ</h1>
                     <h2 class="uppercase">
                         <span id="main-role">SENIOR MULTIMEDIA PRODUCER</span>
@@ -387,7 +376,7 @@
                     <h4 id="footer-stack-audio">AUDIO GEAR</h4>
                     <ul id="footer-list-audio">
                         <li>Neumann U87 / M149</li>
-                        <li>Universal Audio Apollo Twin X</li>
+                        <li>Neumann MT48 Audio Interface</li>
                     </ul>
 
                     <h4 id="footer-stack-lighting">LIGHTING & GRIP</h4>
@@ -436,6 +425,7 @@
                 footerStackCameras: "CAMERAS & LENSES",
                 footerStackWorkstation: "WORKSTATION",
                 footerStackAudio: "AUDIO GEAR",
+                footerListAudio: `<li>Neumann U87 / M149</li><li>Neumann MT48 Audio Interface</li>`,
                 footerStackLighting: "LIGHTING & GRIP"
             },
             es: {
@@ -469,6 +459,7 @@
                 footerStackCameras: "CÁMARAS Y LENTES",
                 footerStackWorkstation: "ESTACIÓN DE TRABAJO",
                 footerStackAudio: "EQUIPO DE AUDIO",
+                footerListAudio: `<li>Neumann U87 / M149</li><li>Neumann MT48 Audio Interface</li>`,
                 footerStackLighting: "ILUMINACIÓN Y SOPORTES"
             }
         };
@@ -512,6 +503,7 @@
             document.getElementById('footer-stack-cameras').innerText = t.footerStackCameras;
             document.getElementById('footer-stack-workstation').innerText = t.footerStackWorkstation;
             document.getElementById('footer-stack-audio').innerText = t.footerStackAudio;
+            document.getElementById('footer-list-audio').innerHTML = t.footerListAudio;
             document.getElementById('footer-stack-lighting').innerText = t.footerStackLighting;
         }
     </script>
