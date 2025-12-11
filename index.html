@@ -45,6 +45,8 @@
                 background-color: white !important;
                 padding: 0 !important;
                 display: block !important;
+                /* CORRECCIÓN PDF: Usar tamaño de fuente legible para impresión */
+                font-size: 11pt !important;
             }
 
             .page-a4 {
@@ -65,19 +67,20 @@
                 print-color-adjust: exact;
             }
 
-            /* AJUSTE CLAVE 1: Fuentes más grandes en impresión para compensar */
-            h1 { font-size: 26pt !important; margin-bottom: 5pt !important; } /* Nombre más grande */
-            h2 { font-size: 14pt !important; margin-bottom: 15pt !important; } /* Título más visible */
-            h3 { font-size: 11pt !important; } /* Subtítulos más claros */
+            /* AJUSTES PARA QUE QUEPA TODO EN UNA PÁGINA CON TEXTO DE BUEN TAMAÑO */
+            .sidebar { padding: 2rem 1.5rem 1rem 1.5rem !important; }
+            .main-content { padding: 1.5rem 2.5rem 0 2.5rem !important; }
+            .bottom-bar { padding: 1rem 2.5rem 1.5rem 2.5rem !important; }
+
+            /* Evitar cortes */
+            h1 { font-size: 24pt !important; margin-bottom: 0.2rem !important; }
+            h2 { font-size: 12pt !important; margin-bottom: 1rem !important; }
+            .profile-img { width: 140px !important; height: 140px !important; }
             
-            /* Ajuste de cuerpo de texto para que no sea minúsculo */
-            p, li, .contact-text { font-size: 9pt !important; line-height: 1.35 !important; }
-            
-            /* Sidebar text un poco más pequeño para que quepa todo bien justificado */
-            .sidebar p, .sidebar li { font-size: 8.5pt !important; }
+            #main-profile-text { margin-top: 1rem !important; margin-bottom: 1rem !important; }
         }
 
-        /* --- ESTRUCTURA FLEXIBLE --- */
+        /* --- ESTRUCTURA FLEXIBLE (Igual a Versión Maestra) --- */
         
         .top-row {
             display: flex;
@@ -90,8 +93,7 @@
             width: 32%;
             background-color: #1e293b;
             color: #f1f5f9;
-            /* Padding ajustado */
-            padding: 3rem 1.5rem 1rem 1.5rem;
+            padding: 3rem 1.5rem 2rem 1.5rem; 
             display: flex;
             flex-direction: column;
         }
@@ -100,7 +102,8 @@
         .main-content {
             width: 68%;
             background-color: #ffffff;
-            padding: 3rem 2.5rem 1rem 2.5rem;
+            /* Padding original de la maestra */
+            padding: 1.25rem 2.5rem 1rem 2.5rem;
             display: flex;
             flex-direction: column;
             justify-content: flex-start; 
@@ -110,9 +113,7 @@
         .bottom-bar {
             background-color: #1e293b; 
             color: #f1f5f9;
-            /* AJUSTE CLAVE 2: Reducción ligera del padding inferior (de 3rem a 2rem) 
-               para evitar que la última línea se corte, manteniendo visualmente el bloque grande */
-            padding: 1.5rem 2.5rem 2rem 2.5rem;
+            padding: 1.5rem 2.5rem 3rem 2.5rem;
             border-top: 1px solid #334155;
             flex-shrink: 0;
         }
@@ -123,7 +124,7 @@
             gap: 1.5rem;
         }
 
-        /* --- ESTILOS DE TEXTO (Web y Base) --- */
+        /* --- ESTILOS DE TEXTO --- */
         h1 { font-size: 2.4rem; font-weight: 700; color: #1e293b; line-height: 1; margin-bottom: 0.25rem; }
         h2 { font-size: 1.2rem; font-weight: 600; color: #0369a1; margin-bottom: 0.5rem; }
         
@@ -146,7 +147,7 @@
         .main-content h4 { color: #334155; margin-top: 1rem; }
         .sidebar h4, .bottom-bar h4 { color: #e2e8f0; margin-top: 0.5rem; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em; }
 
-        /* COMPRESIÓN DE TEXTO */
+        /* Estilos de texto */
         p, li { 
             font-size: 0.85rem; 
             line-height: 1.35; 
@@ -154,14 +155,12 @@
         
         .main-content p, .main-content li { 
             color: #475569; 
-            text-align: justify; 
+            text-align: justify !important;
         }
 
-        /* Justificado en Sidebar */
         .sidebar p, .sidebar li { 
             color: #cbd5e1;
-            text-align: justify; 
-            text-justify: inter-word;
+            text-align: justify !important; 
         }
         
         .bottom-bar p, .bottom-bar li { color: #cbd5e1; }
@@ -172,16 +171,14 @@
         
         .sidebar li, .bottom-bar li { margin-bottom: 0.2rem; }
 
-        /* Estilos de perfil */
         #main-profile-text {
             margin-bottom: 1rem;
-            margin-top: 2em !important; /* Mantenemos el desplazamiento solicitado */
+            margin-top: 1rem !important; 
             line-height: 1.5; 
-            text-align: justify;
+            text-align: justify !important;
         }
-        #main-profile-title { margin-bottom: 0; }
+        #main-profile-title { margin-bottom: 0.5rem; }
 
-        /* Contenedor distribuido del sidebar */
         .sidebar-distribute {
             flex-grow: 1;
             display: flex;
@@ -205,19 +202,6 @@
 
         .icon { width: 1rem; height: 1rem; color: #38bdf8; margin-right: 0.5rem; flex-shrink: 0; margin-top: 2px; }
         .contact-item { display: flex; align-items: flex-start; margin-bottom: 0.5rem; }
-
-        @media print {
-            /* AJUSTE FINAL: Reducir ligeramente padding vertical interno para ganar espacio para las fuentes grandes */
-            .sidebar { padding: 3rem 1.5rem 1rem 1.5rem !important; }
-            .main-content { padding: 3rem 2.5rem 0.5rem 2.5rem !important; }
-            /* Footer padding inferior reducido para evitar corte */
-            .bottom-bar { padding: 1.5rem 2.5rem 2rem 2.5rem !important; }
-            
-            #main-profile-text {
-                margin-top: 2em !important; 
-                margin-bottom: 1rem !important;
-            }
-        }
 
     </style>
 </head>
